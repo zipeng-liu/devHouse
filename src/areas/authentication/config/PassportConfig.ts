@@ -32,11 +32,40 @@ export default class PassportConfig {
       },
       async (email: any, password: any, done: any) => {
         // use FormValidater in here
+        try {
+          const user = await this._authenticationService.getUserByEmailAndPassword(email, password);
+          if (!user) {
+            return done(null, false, { message: "Email or password is incorrect"})
+          }
+          return done(null, user);
+        } catch (error) {
+          return done(error)
+        }
       }
     );
     this.registerStrategy(passport);
+    this.serializeUser(passport);
+    this.deserializeUser(passport);
   }
-  registerStrategy(passport: any) {}
-  private serializeUser(passport: any) {}
-  private deserializeUser(passport: any) {}
+  registerStrategy(passport: any) {
+    passport.use(this._name, this._strategy);
+  }
+  private serializeUser(passport: any) {
+    passport.serializeUser((user: any, done: any) => {
+      done(null, user.id);
+    });
+  }
+  private deserializeUser(passport: any) {
+    passport.deserializeUser(async (id: any, done: any) => {
+      try {
+        const user = await this._authenticationService.getUserById(id);
+        if (!user) {
+          return done(null, false);
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
+    });
+  }
 }

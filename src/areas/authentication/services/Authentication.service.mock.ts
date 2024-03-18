@@ -7,12 +7,21 @@ import type { User } from "@prisma/client";
 export class MockAuthenticationService implements IAuthenticationService {
   readonly _db = database;
 
-  public async getUserByEmailAndPassword(email: any, password: any): Promise<User | null> {
-    throw new Error("Method not yet implemented! ❌");
+  public async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
+    const user = this._db.users.find((user) => user.email === email && user.password === password);
+    if (user) {
+      return user;
+    }
+    throw new Error(`Couldn't find user with email: ${email}`);
+    
   }
 
-  public async findUserByEmail(email: any): Promise<User | null> {
-    throw new Error("Method not yet implemented! ❌");
+  public async findUserByEmail(email: string): Promise<User | null> {
+    const user = this._db.users.find((user) => user.email === email);
+    if (user) {
+      return user;
+    }
+    throw new Error(`Couldn't find user with email: ${email}`);
   }
 
   public async createUser(user: UserDTO): Promise<User> {
@@ -20,6 +29,9 @@ export class MockAuthenticationService implements IAuthenticationService {
   }
 
   public async getUserById(id: any): Promise<User | null> {
-    throw new Error("Method not yet implemented! ❌");
+    const user = this._db.users.find((user) => user.id === id);
+    if (user) {
+      return user;
+    }
   }
 }
