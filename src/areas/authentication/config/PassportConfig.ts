@@ -51,6 +51,8 @@ export default class PassportConfig {
 
   registerStrategy(passport: passport.PassportStatic) {
     passport.use(this._name, this._strategy);
+    this.serializeUser(passport);
+    this.deserializeUser(passport);
   }
   private serializeUser(passport: passport.PassportStatic) {
     passport.serializeUser((user: Express.User, done) => {
