@@ -30,12 +30,19 @@ export default class PassportConfig {
         usernameField: "email",
         passwordField: "password",
       },
+      //TODO
       async (email: any, password: any, done: any) => {
         // use FormValidater in here
+        const getUser = await this._authenticationService.getUserByEmailAndPassword(email, password);
+        if(getUser) {
+          done;
+        }
       }
     );
     this.registerStrategy(passport);
   }
+
+  //TODO to make login work
   registerStrategy(passport: any) {}
   private serializeUser(passport: any) {}
   private deserializeUser(passport: any) {}

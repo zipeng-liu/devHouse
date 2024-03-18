@@ -1,6 +1,6 @@
 import express from "express";
 import IController from "../../../interfaces/controller.interface";
-import { IAuthenticationService } from "../services";
+import { IAuthenticationService, MockAuthenticationService } from "../services";
 
 class AuthenticationController implements IController {
   public path = "/auth";
@@ -18,16 +18,32 @@ class AuthenticationController implements IController {
     this.router.get(`${this.path}/logout`, this.logout);
   }
 
-  private showLoginPage = (_: express.Request, res: express.Response) => {
+  private showLoginPage = (req: express.Request, res: express.Response) => {
+    const error = req.query["errormessage"]; // invalid
+    if (error) {
+      res.render("authentication/views/login", {error});
+    } else {
     res.render("authentication/views/login");
+
+    }
   };
 
   private showRegistrationPage = (_: express.Request, res: express.Response) => {
     res.render("authentication/views/register");
   };
 
+
   // 🔑 These Authentication methods needs to be implemented by you
-  private login = (req: express.Request, res: express.Response) => {};
+  private login = async (req: express.Request, res: express.Response, next) => {
+    if(getUser) {
+      // call passport here
+      res.redirect("/posts")
+    } else {
+      const errormessage = "Invalid email or password"
+     // next(errormessage)
+      res.redirect(`${this.path}/login?error=${errormessage}`)
+    }
+  };
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {};
   private logout = async (req: express.Request, res: express.Response) => {};
 }

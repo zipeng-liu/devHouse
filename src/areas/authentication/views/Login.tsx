@@ -1,6 +1,6 @@
 import { Html } from "../../../templates/html-tmpl";
 
-export default () => {
+export default (props) => {
   return (
     <Html>
       <div class="bg-white font-family-karla h-screen">
@@ -21,6 +21,7 @@ export default () => {
               <p class="text-center font-bold text-3xl">Welcome back</p>
               <form class="flex flex-col" method="post" action="/auth/login">
                 <div class="flex flex-col">
+                  { props.error }
                   <label for="email" class="text-lg">
                     Email
                   </label>
