@@ -7,19 +7,65 @@ import type { User } from "@prisma/client";
 export class MockAuthenticationService implements IAuthenticationService {
   readonly _db = database;
 
-  public async getUserByEmailAndPassword(email: any, password: any): Promise<User | null> {
-    throw new Error("Method not yet implemented! ❌");
+  public async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
+    try {
+      for (const user of this._db.users) {
+        if (user.email === email && user.password === password) {
+          return user;
+        }
+      }
+      throw new Error("User not found");
+    } catch (error) {
+      console.error("Error in getUserByEmailAndPassword:", error);
+      return null;
+    }
   }
 
-  public async findUserByEmail(email: any): Promise<User | null> {
-    throw new Error("Method not yet implemented! ❌");
+  public async findUserByEmail(email: string): Promise<User | null> {
+    try {
+      for (const user of this._db.users) {
+        if (user.email === email) {
+          return user;
+        }
+      }
+      throw new Error("User not found");
+    } catch (error) {
+      console.error("Error in findUserByEmail:", error);
+      return null;
+    }
   }
 
   public async createUser(user: UserDTO): Promise<User> {
-    throw new Error("Method not yet implemented! ❌");
+    try {
+      const newUser: User = {
+        id: randomUUID(),
+        profilePicture: user.profilePicture || "",
+        email: user.email,
+        password: user.password,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        posts: [],
+      };
+      this._db.users.push(newUser); 
+      return newUser;
+    } catch (error) {
+      console.error("Error in createUser:", error);
+      throw error; 
+    }
   }
 
-  public async getUserById(id: any): Promise<User | null> {
-    throw new Error("Method not yet implemented! ❌");
+  public async getUserById(id: string): Promise<User | null> {
+    try {
+      for (const user of this._db.users) {
+        if (user.id === id) {
+          return user;
+        }
+      }
+      throw new Error("User not found");
+    } catch (error) {
+      console.error("Error in getUserById:", error);
+      return null;
+    }
   }
 }
