@@ -5,9 +5,11 @@ import { IAuthenticationService } from "../services";
 class AuthenticationController implements IController {
   public path = "/auth";
   public router = express.Router();
+  private _service: IAuthenticationService;
 
   constructor(service: IAuthenticationService) {
     this.initializeRoutes();
+    this._service = service;
   }
 
   private initializeRoutes() {
@@ -27,9 +29,28 @@ class AuthenticationController implements IController {
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
-  private login = (req: express.Request, res: express.Response) => {};
-  private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {};
-  private logout = async (req: express.Request, res: express.Response) => {};
+  private login = async (req: express.Request, res: express.Response) => {
+    const { email, password } = req.body;
+    try {
+      const user = await this._service.getUserByEmailAndPassword(email, password);
+      if (user) {
+        res.redirect("/posts")
+      } else {
+        const errorMessage = "Invalid email or password";
+        res.render("authentication/views/login", { errorMessage });   
+      }
+    } catch (error) {
+      console.error("Error in login:", error);
+    }
+  };
+
+  private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+  };
+
+  private logout = async (req: express.Request, res: express.Response) => {
+
+  };
 }
 
 export default AuthenticationController;
