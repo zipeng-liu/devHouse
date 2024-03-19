@@ -1,6 +1,7 @@
 import express from "express";
 import IController from "../../../interfaces/controller.interface";
 import { IAuthenticationService } from "../services";
+import { forwardAuthenticated } from "../../../middleware/authentication.middleware";
 
 class AuthenticationController implements IController {
   public path = "/auth";
@@ -13,7 +14,7 @@ class AuthenticationController implements IController {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/register`, this.showRegistrationPage);
+    this.router.get(`${this.path}/register`, forwardAuthenticated, this.showRegistrationPage);
     this.router.post(`${this.path}/register`, this.registration);
     this.router.get(`${this.path}/login`, this.showLoginPage);
     this.router.post(`${this.path}/login`, this.login);
