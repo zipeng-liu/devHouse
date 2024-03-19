@@ -1,13 +1,17 @@
 import express from "express";
 import IController from "../../../interfaces/controller.interface";
 import { IAuthenticationService, MockAuthenticationService } from "../services";
+import passport from "passport";
+import EmailAlreadyExistsException from "../../../exceptions/EmailAlreadyExists";
 
 class AuthenticationController implements IController {
   public path = "/auth";
   public router = express.Router();
+  private _service: IAuthenticationService
 
   constructor(service: IAuthenticationService) {
     this.initializeRoutes();
+    this._service = service;
   }
 
   private initializeRoutes() {
@@ -35,17 +39,50 @@ class AuthenticationController implements IController {
 
   // 🔑 These Authentication methods needs to be implemented by you
   private login = async (req: express.Request, res: express.Response, next) => {
-    if(getUser) {
-      // call passport here
-      res.redirect("/posts")
-    } else {
-      const errormessage = "Invalid email or password"
-     // next(errormessage)
-      res.redirect(`${this.path}/login?error=${errormessage}`)
+    passport.authenticate( "local", {
+      successRedirect: "/posts",
+      failureRedirect: "/auth/login",
+      failureMessage: true }, (err: any, user: Express.User | false, info: any) => {
+        if (err) {
+          req.flash("error", err.message);
+          return res.redirect("/auth/login");
+        } else if (!user) {
+          req.flash("error", info.message);
+          return res.redirect("/auth/login");
+        }
+        req.logIn(user, (err) => {
+          if (err) {
+            req.flash("error", err.message);
+            return res.redirect("/dashboard");
+          }
+          return res.redirect("/");
+        });
+      }
+    )(req, res, next);
+  };
+  private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const { email, password, firstName, lastName } = req.body;
+    const username = `${firstName}geek`
+
+    try {
+      const user = await this._service.findUserByEmail(email);
+      if (user) {
+        throw new EmailAlreadyExistsException(email);
+      }
+      const newUser = await this._service.createUser({email: email, password: password, firstName: firstName, lastName: lastName, username: username});
+      console.log("New user was created")
+    } catch (error) {
+      next(error);
     }
   };
-  private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {};
-  private logout = async (req: express.Request, res: express.Response) => {};
+  private logout = async (req: express.Request, res: express.Response) => {
+    req.logOut((err) => {
+      if(err) {
+        console.log("when you tried to logout an error occured", err)
+      }
+    })
+    res.redirect('/auth/login')
+  };
 }
 
 export default AuthenticationController;
