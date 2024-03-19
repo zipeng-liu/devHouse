@@ -20,9 +20,7 @@ export default (props: { errorMessage: string }) => {
 
             <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
               <p class="text-center font-bold text-3xl">Welcome back</p>
-              {props.errorMessage && props.errorMessage.trim().length > 0 && (
-                <ErrorAlert errorMessage={props.errorMessage} />
-              )}
+              {props.errorMessage && <ErrorAlert errorMessage={props.errorMessage} />}
               <form class="flex flex-col" method="post" action="/auth/login">
                 <div class="flex flex-col">
                   <label for="email" class="text-lg">

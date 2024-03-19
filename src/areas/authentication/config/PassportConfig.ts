@@ -6,7 +6,7 @@
 // finish it off 🚀 Make sure to replace the "any" type.
 
 import IUser from "../../../interfaces/user.interface";
-import passport from "passport";
+import passport, { PassportStatic } from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { IAuthenticationService, UserDTO } from "../services/IAuthentication.service";
 import FormValidater from "../../../helper/FormValidator";
@@ -44,18 +44,19 @@ export default class PassportConfig {
       }
     );
     this.registerStrategy(passport);
+   
+  }
+  registerStrategy(passport: PassportStatic) { 
+    passport.use(this._name, this._strategy);
     this.serializeUser(passport);
     this.deserializeUser(passport);
   }
-  registerStrategy(passport: typeof import('passport')) { // not sure
-    passport.use(this._name, this._strategy);
-  }
-  private serializeUser(passport: typeof import('passport')) {
-    passport.serializeUser((user: UserDTO, done: any) => {
-      done(null, user.email);
+  private serializeUser(passport: PassportStatic) {
+    passport.serializeUser((user: Express.User, done: any) => {
+      done(null, user.id);
     });
   }
-  private deserializeUser(passport: typeof import('passport')) {
+  private deserializeUser(passport: PassportStatic) {
     passport.deserializeUser(async (id: string, done: any) => {
       try {
         const user = await this._authenticationService.getUserById(id);
