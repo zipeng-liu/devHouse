@@ -47,6 +47,7 @@ export default class PassportConfig {
         }
       }
     );
+    this.registerStrategy(passport);
   }
 
   registerStrategy(passport: passport.PassportStatic) {

@@ -3,6 +3,7 @@ import IController from "../../../interfaces/controller.interface";
 import passport from "passport";
 import { IAuthenticationService } from "../services";
 import EmailAlreadyExistsException from "../../../exceptions/EmailAlreadyExists";
+import { forwardAuthenticated } from "../../../middleware/authentication.middleware";
 
 class AuthenticationController implements IController {
   public path = "/auth";
@@ -17,8 +18,12 @@ class AuthenticationController implements IController {
   private initializeRoutes() {
     this.router.get(`${this.path}/register`, this.showRegistrationPage);
     this.router.post(`${this.path}/register`, this.registration);
-    this.router.get(`${this.path}/login`, this.showLoginPage);
-    this.router.post(`${this.path}/login`, this.login);
+    this.router.get(`${this.path}/login`, forwardAuthenticated, this.showLoginPage);
+    this.router.post(`${this.path}/login`, this.login, (req, res) => {
+      console.log("We hit here");
+      console.log(req.user);
+      res.redirect("/posts");
+    });
     this.router.get(`${this.path}/logout`, this.logout);
   }
 
@@ -31,24 +36,11 @@ class AuthenticationController implements IController {
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
-  private login = (req: express.Request, res: express.Response, next: NextFunction) => {
-    passport.authenticate("local", (err: any, user: Express.User | false, info: any) => {
-      if (err) {
-        req.flash("error", err.message);
-        return res.redirect("/auth/login");
-      } else if (!user) {
-        req.flash("error", info.message);
-        return res.redirect("/auth/login");
-      }
-      req.logIn(user, (err) => {
-        if (err) {
-          req.flash("error", err.message);
-          return res.redirect("/dashboard");
-        }
-        return res.redirect("/");
-      });
-    })(req, res, next);
-  };
+  private login = passport.authenticate("local", {
+    failureRedirect: "/auth/login",
+    successRedirect: "/posts",
+    failureMessage: true,
+  });
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const { email, password } = req.body;
 
@@ -57,6 +49,14 @@ class AuthenticationController implements IController {
       if (userEmailExists) {
         throw new EmailAlreadyExistsException(email);
       }
+      this.service.createUser({
+        username: "fake",
+        email,
+        password,
+        firstName: "fake",
+        lastName: "fake",
+      });
+      res.redirect("/auth/login");
     } catch (error) {
       next(error);
     }
