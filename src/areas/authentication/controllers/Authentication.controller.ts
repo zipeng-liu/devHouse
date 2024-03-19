@@ -2,6 +2,13 @@ import express from "express";
 import IController from "../../../interfaces/controller.interface";
 import { IAuthenticationService } from "../services";
 import { forwardAuthenticated } from "../../../middleware/authentication.middleware";
+import { SessionData } from "express-session";
+
+declare module "express-session" {
+  interface SessionData {
+    userID: { [id: string ]: string }
+  }
+}
 
 class AuthenticationController implements IController {
   public path = "/auth";
@@ -14,9 +21,9 @@ class AuthenticationController implements IController {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/register`, forwardAuthenticated, this.showRegistrationPage);
+    this.router.get(`${this.path}/register`, this.showRegistrationPage);
     this.router.post(`${this.path}/register`, this.registration);
-    this.router.get(`${this.path}/login`, this.showLoginPage);
+    this.router.get(`${this.path}/login`, forwardAuthenticated, this.showLoginPage);
     this.router.post(`${this.path}/login`, this.login);
     this.router.get(`${this.path}/logout`, this.logout);
   }
@@ -35,6 +42,7 @@ class AuthenticationController implements IController {
     try {
       const user = await this._service.getUserByEmailAndPassword(email, password);
       if (user) {
+        req.session.userID = user.id;
         res.redirect("/posts")
       } else {
         const errorMessage = "Invalid email or password";

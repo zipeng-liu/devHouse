@@ -9,28 +9,26 @@ export class MockAuthenticationService implements IAuthenticationService {
 
   public async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
     try {
-      for (const user of this._db.users) {
-        if (user.email === email && user.password === password) {
-          return user;
-        }
+      const user = this._db.users.find(user => user.email === email && user.password === password);
+      if (user) {
+        return user;
       }
       throw new Error("User not found");
     } catch (error) {
-      console.error("Error in getUserByEmailAndPassword:", error);
+      console.log("Error in getUserByEmailAndPassword:", error);
       return null;
     }
   }
 
   public async findUserByEmail(email: string): Promise<User | null> {
     try {
-      for (const user of this._db.users) {
-        if (user.email === email) {
-          return user;
-        }
+      const user = this._db.users.find(user => user.email === email);
+      if (user) {
+        return user;
       }
       throw new Error("User not found");
     } catch (error) {
-      console.error("Error in findUserByEmail:", error);
+      console.log("Error in findUserByEmail:", error);
       return null;
     }
   }
@@ -47,24 +45,23 @@ export class MockAuthenticationService implements IAuthenticationService {
         username: user.username,
         posts: [],
       };
-      this._db.users.push(newUser); 
+      this._db.users.push(newUser);
       return newUser;
     } catch (error) {
-      console.error("Error in createUser:", error);
-      throw error; 
+      console.log("Error in createUser:", error);
+      throw error;
     }
   }
 
   public async getUserById(id: string): Promise<User | null> {
     try {
-      for (const user of this._db.users) {
-        if (user.id === id) {
-          return user;
-        }
+      const user = this._db.users.find(user => user.id === id);
+      if (user) {
+        return user;
       }
       throw new Error("User not found");
     } catch (error) {
-      console.error("Error in getUserById:", error);
+      console.log("Error in getUserById:", error);
       return null;
     }
   }

@@ -33,16 +33,13 @@ export default class PassportConfig {
       async (email: string, password: string, done: (error: any, user?: false | Express.User) => void) => {
         // use FormValidater in here
         try {
-          const validationResult = FormValidater.IsEmpty(email);
-          if (!validationResult) {
+          if (FormValidater.IsEmpty(email) || FormValidater.IsEmpty(password)) {
             return done(null, false);
           }
-
           const user = await this._authenticationService.getUserByEmailAndPassword(email, password);
           if (!user) {
             return done(null, false);
           }
-
           return done(null, user);
         } catch (error) {
           return done(error);
@@ -52,19 +49,19 @@ export default class PassportConfig {
     this.registerStrategy(passport);
   }
 
-  registerStrategy(passport: typeof import('passport')) {
+  registerStrategy(passport:  passport.PassportStatic) {
     passport.use(this._name, this._strategy);
     this.serializeUser(passport);
     this.deserializeUser(passport);
   }
 
-  private serializeUser(passport: typeof import('passport')) {
-    passport.serializeUser((user: UserDTO, done: (err: any, id?: unknown) => void) => {
+  private serializeUser(passport:  passport.PassportStatic) {
+    passport.serializeUser((user: Express.User, done: (err: any, id?: unknown) => void) => {
       done(null, user.id);
     });
   }
 
-  private deserializeUser(passport: typeof import('passport')) {
+  private deserializeUser(passport: passport.PassportStatic) {
     passport.deserializeUser(async (id: string, done: (err: any, user?: false | Express.User) => void) => {
       try {
         const user = await this._authenticationService.getUserById(id);
