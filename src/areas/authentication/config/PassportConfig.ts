@@ -8,7 +8,7 @@
 import IUser from "../../../interfaces/user.interface";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { IAuthenticationService } from "../services/IAuthentication.service";
+import { IAuthenticationService, UserDTO } from "../services/IAuthentication.service";
 import FormValidater from "../../../helper/FormValidator";
 
 declare global {
@@ -30,7 +30,7 @@ export default class PassportConfig {
         usernameField: "email",
         passwordField: "password",
       },
-      async (email: any, password: any, done: any) => {
+      async (email: string, password: any, done: any) => {
         // use FormValidater in here
         try {
           const user = await this._authenticationService.getUserByEmailAndPassword(email, password);
@@ -47,16 +47,16 @@ export default class PassportConfig {
     this.serializeUser(passport);
     this.deserializeUser(passport);
   }
-  registerStrategy(passport: any) {
+  registerStrategy(passport: typeof import('passport')) { // not sure
     passport.use(this._name, this._strategy);
   }
-  private serializeUser(passport: any) {
-    passport.serializeUser((user: any, done: any) => {
-      done(null, user.id);
+  private serializeUser(passport: typeof import('passport')) {
+    passport.serializeUser((user: UserDTO, done: any) => {
+      done(null, user.email);
     });
   }
-  private deserializeUser(passport: any) {
-    passport.deserializeUser(async (id: any, done: any) => {
+  private deserializeUser(passport: typeof import('passport')) {
+    passport.deserializeUser(async (id: string, done: any) => {
       try {
         const user = await this._authenticationService.getUserById(id);
         if (!user) {

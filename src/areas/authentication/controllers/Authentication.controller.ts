@@ -1,7 +1,6 @@
 import express from "express";
 import IController from "../../../interfaces/controller.interface";
 import { IAuthenticationService, MockAuthenticationService } from "../services";
-import passport from "passport";
 
 // dont use IAuth yet, use mockAuth
 class AuthenticationController implements IController {
@@ -23,12 +22,11 @@ class AuthenticationController implements IController {
   }
 
   private showLoginPage = (_: express.Request, res: express.Response) => {
-    const errorMessage = ""
-    res.render("authentication/views/login", { errorMessage });
+    res.render("authentication/views/login");
   };
 
   private showRegistrationPage = (_: express.Request, res: express.Response) => {
-    const errorMessage = "invalid email"
+    const errorMessage =  ""
     res.render("authentication/views/register", { errorMessage });
   };
 
@@ -38,24 +36,27 @@ class AuthenticationController implements IController {
     try {
       const user = await this._service.getUserByEmailAndPassword(email, password);
       if (user) {
-        res.status(200).send({ message: "log in successful"});
+        res.redirect("/posts")
       } else {
-
+        const errorMessage = "Invalid email or password";
+        res.render("authentication/views/login", { errorMessage });   
       }
-      res.status(200).send({ message: "log in successful"})
     } catch (error) {
-      
-    }
+      console.log(error)
+     }
 //dont need to call new mock as in services there is 
 //DELETE EVERYTHING HERE, authenticationController is recieving the mockauth
 //do this beneath
   };
 
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const { email, password, username, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName } = req.body;
+    const username = firstName;
+
     try {
         const user = await this._service.createUser({ email, password, username, firstName, lastName });
-        res.status(200).send({ message: "Crated user:", user });
+        res.status(200).send({ message: "Created user:", user });
+        
     } catch (error) {
         next(error);
     }
