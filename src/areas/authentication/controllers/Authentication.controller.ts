@@ -71,10 +71,18 @@ class AuthenticationController implements IController {
       }
       const newUser = await this._service.createUser({email: email, password: password, firstName: firstName, lastName: lastName, username: username});
       console.log("New user was created")
+      req.logIn(user, (err) => {
+        if (err) {
+          req.flash("error", err.message);
+          return res.redirect("/dashboard");
+        }
+        return res.redirect("/");
+      });
     } catch (error) {
       next(error);
     }
   };
+
   private logout = async (req: express.Request, res: express.Response) => {
     req.logOut((err) => {
       if(err) {

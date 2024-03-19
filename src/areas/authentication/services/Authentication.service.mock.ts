@@ -1,12 +1,12 @@
 import { database } from "../../../model/fakeDB";
 import { IAuthenticationService, UserDTO } from "./IAuthentication.service";
-import { randomUUID } from "node:crypto";
 import type { User } from "@prisma/client";
-import cryptoRandomString from 'crypto-random-string';
+// import cryptoRandomString from 'crypto-random-string';
+import { randomUUID } from "node:crypto"
 import bcrypt from 'bcrypt'
 //import IUser from "interfaces/user.interface";
 const saltRounds = 10;
-
+// test
 // FIXME: Don't forget: you shouldn't have the type "any"!
 export class MockAuthenticationService implements IAuthenticationService {
   readonly _db = database;
@@ -44,7 +44,7 @@ export class MockAuthenticationService implements IAuthenticationService {
 
   public async createUser(user: UserDTO): Promise<User> {
     try {
-      const createId = cryptoRandomString({length: 10});
+      const createId = randomUUID();
       const hashedPassword = await bcrypt.genSalt(saltRounds, function(err, salt) { 
         bcrypt.hash(user.password, salt, function(err, hash) {
           if(hash) {
