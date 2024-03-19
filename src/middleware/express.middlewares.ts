@@ -4,6 +4,7 @@ import session from "express-session";
 import morgan from "morgan";
 import connectLiveReload from "connect-livereload";
 import { expressExtend } from "jsxte";
+// import RedisStore from "connect-redis";
 
 module.exports = (app) => {
   app.set("views", path.join(__dirname, "..", "areas"));
@@ -14,6 +15,7 @@ module.exports = (app) => {
   app.use(morgan("tiny"));
   app.use(
     session({
+      // store: RedisStore,
       secret: "secret",
       resave: false,
       saveUninitialized: false,

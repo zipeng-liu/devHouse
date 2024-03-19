@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, Router } from "express";
 import IController from "../../../interfaces/controller.interface";
 import IPostService from "../services/IPostService";
 import { post, posts } from "../../../model/fakeDB";
+import { ensureAuthenticated } from "../../../middleware/authentication.middleware";
 
 class PostController implements IController {
   public path = "/posts";
@@ -12,7 +13,7 @@ class PostController implements IController {
   }
 
   private initializeRoutes() {
-    this.router.get(this.path, this.getAllPosts);
+    this.router.get(this.path, ensureAuthenticated, this.getAllPosts);
     this.router.get(`${this.path}/:id`, this.getPostById);
     this.router.get(`${this.path}/:id/delete`, this.deletePost);
     this.router.post(`${this.path}/:id/comment`, this.createComment);
