@@ -17,7 +17,7 @@ export class AuthenticationService implements IAuthenticationService {
     });
   }
   async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
-    const user = this.findUserByEmail(email);
+    const user = await this.findUserByEmail(email);
     if (!user) {
       return null;
     }
