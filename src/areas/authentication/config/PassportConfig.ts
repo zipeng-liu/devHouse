@@ -10,6 +10,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { IAuthenticationService } from "../services/IAuthentication.service";
 import FormValidater from "../../../helper/FormValidator";
+import { AuthenticationService } from "../services/Authentication.service";
 
 declare global {
   namespace Express {
