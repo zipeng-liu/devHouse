@@ -22,7 +22,35 @@ export default (props: { errorMessage: string }) => {
               <p class="text-center font-bold text-3xl">Welcome!</p>
               { props.errorMessage && <ErrorAlert errorMessage={props.errorMessage} />}
               <form class="flex flex-col" method="post" action="/auth/register">
-                <div class="flex flex-col">
+              <div class="flex flex-col">
+                  <label for="firstName" class="text-lg">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="First Name"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                    required
+                  />
+                </div>
+
+                <div class="flex flex-col  pt-4">
+                  <label for="lastName" class="text-lg">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Last Name"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                    required
+                  />
+                </div>
+                
+                <div class="flex flex-col  pt-4">
                   <label for="email" class="text-lg">
                     Email
                   </label>

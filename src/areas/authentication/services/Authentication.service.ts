@@ -15,8 +15,13 @@ export class AuthenticationService implements IAuthenticationService {
     });
   }
   async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
-    // 🚀 Talk to your real database here
-    throw new Error("Method not implemented.");
+    return await this._db.prisma.user.findUniqueOrThrow({
+      where: {
+        email: email,
+        password: password
+      }
+    })
+   
   }
   async createUser(user: UserDTO): Promise<User> {
     // 🚀 Talk to your real database here
@@ -24,6 +29,10 @@ export class AuthenticationService implements IAuthenticationService {
   }
 
   getUserById(id: string): Promise<User | null> {
-    throw new Error("Method not implemented.");
+    return this._db.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+    });
   }
 }
