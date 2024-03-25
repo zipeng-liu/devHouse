@@ -27,12 +27,16 @@ class AuthenticationController implements IController {
     this.router.get(`${this.path}/logout`, this.logout);
   }
 
-  private showLoginPage = (_: express.Request, res: express.Response) => {
-    res.render("authentication/views/login");
+  private showLoginPage = (req: express.Request, res: express.Response) => {
+    // @ts-ignore
+    const errorMessage = req.session.messages;
+    res.render("authentication/views/login", { errorMessage });
   };
 
-  private showRegistrationPage = (_: express.Request, res: express.Response) => {
-    res.render("authentication/views/register");
+  private showRegistrationPage = (req: express.Request, res: express.Response) => {
+    // @ts-ignore
+    const errorMessage = req.session.messages;
+    res.render("authentication/views/register", { errorMessage });
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
