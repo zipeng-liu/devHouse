@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(cuid())
+  id        Int    @id @default(autoincrement())
   username  String @unique
   email     String @unique
   password  String
@@ -19,8 +19,20 @@ model User {
 }
 
 model Post {
-  id      String @id @default(cuid())
-  content String
-  userId  String
-  user    User   @relation(fields: [userId], references: [id])
+  postId      Int       @id @default(autoincrement())
+  message     String
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  likes       Int
+  comments    Int
+  commentList Comment[]
+}
+
+model Comment {
+  commentId Int      @id @default(autoincrement())
+  message   String
+  createdAt DateTime @default(now())
+  Post      Post     @relation(fields: [postId], references: [postId])
+  postId    Int
 }
