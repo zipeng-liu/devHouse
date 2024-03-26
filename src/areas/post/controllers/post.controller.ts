@@ -25,19 +25,31 @@ class PostController implements IController {
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
   private getAllPosts = async (req: Request, res: Response) => {
     const user = req.user;
-    await this._service.getAllPosts(user.id);
+    await this._service.getAllPosts(user.username);
     res.render("post/views/posts", { posts: posts });
   };
 
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object
-  private getPostById = async (request: Request, res: Response, next: NextFunction) => {
+  private getPostById = async (req: Request, res: Response, next: NextFunction) => {
+    const postInfo = req.body;
+    const post = await this._service.findById(postInfo.postId)
     res.render("post/views/post", { post: posts[0] });
   };
 
-  // 🚀 These post methods needs to be implemented by you
-  private createComment = async (req: Request, res: Response, next: NextFunction) => {};
-  private createPost = async (req: Request, res: Response, next: NextFunction) => {};
-  private deletePost = async (req: Request, res: Response, next: NextFunction) => {};
+  private createComment = async (req: Request, res: Response, next: NextFunction) => {
+    const {message, postId} = req.body;
+    const newComment = await this._service.addCommentToPost(message, postId)
+    res.redirect("post/views/posts")
+  };
+  private createPost = async (req: Request, res: Response, next: NextFunction) => {
+    const data = req.body;
+    const user = req.user;
+    const newPost = this._service.addPost(data, user.id)
+    res.redirect("post/view/posts")
+  };
+  private deletePost = async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user;
+  };
 }
 
 export default PostController;
