@@ -6,6 +6,7 @@ const postsDB: IPost[] = [];
 export class MockPostService implements IPostService {
   addPost(post: IPost, username: string): void {
     // 🚀 Implement this yourself.
+    
     postsDB.push(post);
   }
   getAllPosts(username: string): IPost[] {

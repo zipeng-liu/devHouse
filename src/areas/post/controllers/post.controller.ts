@@ -7,9 +7,11 @@ import { ensureAuthenticated } from "../../../middleware/authentication.middlewa
 class PostController implements IController {
   public path = "/posts";
   public router = Router();
+  private _service: IPostService;
 
   constructor(postService: IPostService) {
     this.initializeRoutes();
+    this._service = postService;
   }
 
   private initializeRoutes() {
@@ -21,17 +23,33 @@ class PostController implements IController {
   }
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
-  private getAllPosts = (_: Request, res: Response) => {
+  private getAllPosts = async (req: Request, res: Response) => {
+    const user = req.user;
+    await this._service.getAllPosts(user.id);
     res.render("post/views/posts", { posts: posts });
   };
 
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object
   private getPostById = async (request: Request, res: Response, next: NextFunction) => {
-    res.render("post/views/post", { post: posts[0] });
+    const postId = request.params.id;
+    const post = await this._service.findById(postId);
+
+    res.render("post/views/post", { post: post });
   };
 
   // 🚀 These post methods needs to be implemented by you
-  private createComment = async (req: Request, res: Response, next: NextFunction) => {};
+  private createComment = async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.id;
+    const { id, createdAt, userId, message } = req.body;
+    const comment = { id, createdAt, userId, message }
+    try {
+      await this._service.addCommentToPost(comment, postId,);
+      res.redirect("/posts/${postId}");
+    } catch {
+      res.status(404).send("Error")
+    }
+
+  };
   private createPost = async (req: Request, res: Response, next: NextFunction) => {};
   private deletePost = async (req: Request, res: Response, next: NextFunction) => {};
 }
