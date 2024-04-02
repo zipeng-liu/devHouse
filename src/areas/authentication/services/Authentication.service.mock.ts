@@ -11,62 +11,42 @@ export class MockAuthenticationService implements IAuthenticationService {
   readonly _db = database;
 
   public async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
-    try {
-      const user = this._db.users.find(user => user.email === email);
-      if (user && await bcrypt.compare(password, user.password)) {
-        return user;
-      }
-      throw new Error("User not found or incorrect password");
-    } catch (error) {
-      console.log("Error in getUserByEmailAndPassword:", error);
-      return null;
+    const user = this._db.users.find(user => user.email === email);
+    if (user && await bcrypt.compare(password, user.password)) {
+      return user;
     }
+    throw new Error("User not found or incorrect password");
   }
 
   public async findUserByEmail(email: string): Promise<User | null> {
-    try {
-      const user = this._db.users.find(user => user.email === email);
-      if (user) {
-        return user;
-      }
-      throw new Error("User not found");
-    } catch (error) {
-      console.log("Error in findUserByEmail:", error);
-      return null;
+    const user = this._db.users.find(user => user.email === email);
+    if (user) {
+      return user;
     }
+    throw new Error("User not found");
   }
 
   public async createUser(user: UserDTO): Promise<User> {
-    try {
-      const hashedPassword = await bcrypt.hash(user.password, SALT_ROUNDS);
-      const newUser: User = {
-        id: randomUUID(),
-        profilePicture: user.profilePicture || "",
-        email: user.email,
-        password: hashedPassword,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-        posts: [],
-      };
-      this._db.users.push(newUser);
-      return newUser;
-    } catch (error) {
-      console.log("Error in createUser:", error);
-      throw error;
-    }
+    const hashedPassword = await bcrypt.hash(user.password, SALT_ROUNDS);
+    const newUser: User = {
+      id: randomUUID(),
+      profilePicture: user.profilePicture || "",
+      email: user.email,
+      password: hashedPassword,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      posts: [],
+    };
+    this._db.users.push(newUser);
+    return newUser;
   }
 
   public async getUserById(id: string): Promise<User | null> {
-    try {
-      const user = this._db.users.find(user => user.id === id);
-      if (user) {
-        return user;
-      }
-      throw new Error("User not found");
-    } catch (error) {
-      console.log("Error in getUserById:", error);
-      return null;
+    const user = this._db.users.find(user => user.id === id);
+    if (user) {
+      return user;
     }
+    throw new Error("User not found");
   }
 }

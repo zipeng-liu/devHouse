@@ -7,7 +7,8 @@ import { SessionData } from "express-session";
 
 declare module "express-session" {
   interface SessionData {
-    userID: { [id: string ]: string }
+    userID: { [id: string ]: string };
+    messages: string[];
   }
 }
 
@@ -29,12 +30,17 @@ class AuthenticationController implements IController {
     this.router.get(`${this.path}/logout`, this.logout);
   }
 
-  private showLoginPage = (_: express.Request, res: express.Response) => {
-    res.render("authentication/views/login");
+  private showLoginPage = (req: express.Request, res: express.Response) => {
+    const errorMessage = req.session.messages || [];
+    console.log(errorMessage)
+    req.session.messages = [];
+    res.render("authentication/views/login", { errorMessage });
   };
 
-  private showRegistrationPage = (_: express.Request, res: express.Response) => {
-    res.render("authentication/views/register");
+  private showRegistrationPage = (req: express.Request, res: express.Response) => {
+    const errorMessage = req.session.messages || [];
+    req.session.messages = [];
+    res.render("authentication/views/register", { errorMessage });
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
@@ -44,7 +50,7 @@ class AuthenticationController implements IController {
     failureMessage: true,
   });
 
-
+  
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   };

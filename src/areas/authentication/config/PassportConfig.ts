@@ -8,7 +8,7 @@
 import IUser from "../../../interfaces/user.interface";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { IAuthenticationService, UserDTO } from "../services/IAuthentication.service";
+import { IAuthenticationService } from "../services/IAuthentication.service";
 import FormValidater from "../../../helper/FormValidator";
 
 declare global {
@@ -30,17 +30,18 @@ export default class PassportConfig {
         usernameField: "email",
         passwordField: "password",
       },
-      async (email: string, password: string, done: (error: any, user?: false | Express.User) => void) => {
+      async (email: string, password: string, done: any) => {
         // use FormValidater in here
+        if (FormValidater.IsEmpty(email) || FormValidater.IsEmpty(password)) {
+          return done(null, false, { message: "Email or password cannot be empty." });
+        }
         try {
-          if (FormValidater.IsEmpty(email) || FormValidater.IsEmpty(password)) {
-            return done(null, false);
-          }
           const user = await this._authenticationService.getUserByEmailAndPassword(email, password);
-          if (!user) {
-            return done(null, false);
+          if (user) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: "Invalid email or password." });
           }
-          return done(null, user);
         } catch (error) {
           return done(error);
         }
@@ -49,29 +50,25 @@ export default class PassportConfig {
     this.registerStrategy(passport);
   }
 
-  registerStrategy(passport:  passport.PassportStatic) {
+  registerStrategy(passport: passport.PassportStatic) {
     passport.use(this._name, this._strategy);
     this.serializeUser(passport);
     this.deserializeUser(passport);
   }
-
-  private serializeUser(passport:  passport.PassportStatic) {
-    passport.serializeUser((user: Express.User, done: (err: any, id?: unknown) => void) => {
+  private serializeUser(passport: passport.PassportStatic) {
+    passport.serializeUser((user: Express.User, done) => {
       done(null, user.id);
     });
   }
 
   private deserializeUser(passport: passport.PassportStatic) {
-    passport.deserializeUser(async (id: string, done: (err: any, user?: false | Express.User) => void) => {
-      try {
-        const user = await this._authenticationService.getUserById(id);
-        if (!user) {
-          return done(null, false);
-        }
-        return done(null, user);
-      } catch (error) {
-        return done(error);
-      }
+    passport.deserializeUser((id: string, done) => {
+      this._authenticationService
+        .getUserById(id)
+        .then((user) => {
+          done(null, user);
+        })
+        .catch((error) => done(error));
     });
   }
 }
