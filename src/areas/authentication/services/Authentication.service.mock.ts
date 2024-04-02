@@ -2,6 +2,9 @@ import { database } from "../../../model/fakeDB";
 import { IAuthenticationService, UserDTO } from "./IAuthentication.service";
 import { randomUUID } from "node:crypto";
 import type { User } from "@prisma/client";
+import bcrypt from "bcrypt";
+
+const SALT_ROUNDS = 10;
 
 // FIXME: Don't forget: you shouldn't have the type "any"!
 export class MockAuthenticationService implements IAuthenticationService {
@@ -9,11 +12,11 @@ export class MockAuthenticationService implements IAuthenticationService {
 
   public async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
     try {
-      const user = this._db.users.find(user => user.email === email && user.password === password);
-      if (user) {
+      const user = this._db.users.find(user => user.email === email);
+      if (user && await bcrypt.compare(password, user.password)) {
         return user;
       }
-      throw new Error("User not found");
+      throw new Error("User not found or incorrect password");
     } catch (error) {
       console.log("Error in getUserByEmailAndPassword:", error);
       return null;
@@ -35,11 +38,12 @@ export class MockAuthenticationService implements IAuthenticationService {
 
   public async createUser(user: UserDTO): Promise<User> {
     try {
+      const hashedPassword = await bcrypt.hash(user.password, SALT_ROUNDS);
       const newUser: User = {
         id: randomUUID(),
         profilePicture: user.profilePicture || "",
         email: user.email,
-        password: user.password,
+        password: hashedPassword,
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,

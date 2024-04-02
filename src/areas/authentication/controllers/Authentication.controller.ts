@@ -1,6 +1,7 @@
 import express from "express";
 import IController from "../../../interfaces/controller.interface";
 import { IAuthenticationService } from "../services";
+import passport from "passport";
 import { forwardAuthenticated } from "../../../middleware/authentication.middleware";
 import { SessionData } from "express-session";
 
@@ -37,28 +38,24 @@ class AuthenticationController implements IController {
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
-  private login = async (req: express.Request, res: express.Response) => {
-    const { email, password } = req.body;
-    try {
-      const user = await this._service.getUserByEmailAndPassword(email, password);
-      if (user) {
-        req.session.userID = user.id;
-        res.redirect("/posts")
-      } else {
-        const errorMessage = "Invalid email or password";
-        res.render("authentication/views/login", { errorMessage });   
-      }
-    } catch (error) {
-      console.error("Error in login:", error);
-    }
-  };
+  private login = passport.authenticate("local", {
+    failureRedirect: "/auth/login",
+    successRedirect: "/posts",
+    failureMessage: true,
+  });
+
 
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   };
 
   private logout = async (req: express.Request, res: express.Response) => {
-
+    req.logout((err) => {
+      if (err) { 
+        console.log(err);
+      }
+    });
+    res.redirect("/");
   };
 }
 

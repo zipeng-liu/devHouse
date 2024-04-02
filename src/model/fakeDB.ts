@@ -10,7 +10,7 @@ const database: IDatabase = {
       profilePicture:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png",
       email: "gates@gmail.com",
-      password: "gates123",
+      password: "$2b$10$TwCpkidZ8g3yJ/CPUTPmDuUWtTQQBN.mRIvxeJGyJgNoUE4mHz.wS", // gates123
       firstName: "Bill",
       lastName: "Gates",
       username: "billgates",
@@ -39,7 +39,7 @@ const database: IDatabase = {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png",
       username: "james123",
       email: "james123@gmail.com",
-      password: "james123",
+      password: "$2b$10$mk3KYptOMaLQhz2OyVZ6M.KluYjflcgSWtzYpjit47aqgGjFScG4G", // james123
       firstName: "James",
       lastName: "Smith",
       posts: [
