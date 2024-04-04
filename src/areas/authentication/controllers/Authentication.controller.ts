@@ -31,24 +31,45 @@ class AuthenticationController implements IController {
   }
 
   private showLoginPage = (req: express.Request, res: express.Response) => {
-    const errorMessage = req.session.messages || [];
-    console.log(errorMessage)
-    req.session.messages = [];
+    const errorMessage = req.session.messages || null;
+    console.log(errorMessage);
+    req.session.messages = null;
     res.render("authentication/views/login", { errorMessage });
   };
 
   private showRegistrationPage = (req: express.Request, res: express.Response) => {
-    const errorMessage = req.session.messages || [];
-    req.session.messages = [];
+    const errorMessage = req.session.messages || null;
+    console.log(errorMessage);
+    req.session.messages = null;
     res.render("authentication/views/register", { errorMessage });
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
-  private login = passport.authenticate("local", {
-    failureRedirect: "/auth/login",
-    successRedirect: "/posts",
-    failureMessage: true,
-  });
+  // private login = passport.authenticate("local", {
+  //   failureRedirect: "/auth/login",
+  //   successRedirect: "/posts",
+  //   failureMessage: true,
+  // });
+
+  private login = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    passport.authenticate('local', (err: { message: string; }, user: Express.User, info: { message: string; }) => {
+      if (err) {
+        req.session.messages = [err.message];
+        return res.redirect('/auth/login');
+      }
+      if (!user) {
+        req.session.messages = [info.message]; 
+        return res.redirect('/auth/login');
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          req.session.messages = [err.message];
+          return res.redirect('/auth/login');
+        }
+        return res.redirect('/posts');
+      });
+    })(req, res, next);
+  };
 
   
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
