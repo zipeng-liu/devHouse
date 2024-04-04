@@ -45,12 +45,6 @@ class AuthenticationController implements IController {
   };
 
   // 🔑 These Authentication methods needs to be implemented by you
-  // private login = passport.authenticate("local", {
-  //   failureRedirect: "/auth/login",
-  //   successRedirect: "/posts",
-  //   failureMessage: true,
-  // });
-
   private login = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     passport.authenticate('local', (err: { message: string; }, user: Express.User, info: { message: string; }) => {
       if (err) {
@@ -73,7 +67,28 @@ class AuthenticationController implements IController {
 
   
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
+    try {
+      const { firstName, lastName, username, email, password } = req.body;
+      const existingUser = await this._service.findUserByEmail(email);
+      if (existingUser) {
+        req.session.messages = ["User with this email already exists"];
+        return res.redirect('/auth/register');
+      }
+  
+      const newUser = await this._service.createUser({ email, password, firstName, lastName, username });
+  
+      req.logIn(newUser, (err) => {
+        if (err) {
+          req.session.messages = [err.message];
+          return res.redirect('/auth/login');
+        }
+        return res.redirect('/posts');
+      });
+    } catch (error) {
+      console.error('registration', error.message);
+      req.session.messages = ["Registration failed"];
+      return res.redirect('/auth/register');
+    }
   };
 
   private logout = async (req: express.Request, res: express.Response) => {
