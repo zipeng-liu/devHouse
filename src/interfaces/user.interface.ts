@@ -1,7 +1,7 @@
 //NOTE - You probably won't need this in the long run, but it'll probably be
 // helpful while creating your MockAuthenticationService implementations
 export default interface IUser {
-  id: string;
+  id: number;
   username: string;
   email: string;
   password: string;

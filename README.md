@@ -1,11 +1,11 @@
 Breakdown of Work:
 
 Example below:
-March 9th (First Sprint Complete)
-Aless Wei:
+March 
+Armaan Brar:
 I worked on the following tasks:
 
-1. <implement formValidater> - to check if user's input for login is either empty or incorrect
+1. <Implemented post routes> - 
 2. <serializeUser and deserializeUser> - to store user data needed in the session
 3. <deserializeUser> - This task is responsible for xyz functionality.
 

@@ -1,5 +1,5 @@
 interface IComment {
-  id: string;
+  id: number;
   message: string;
   userId: string;
   createdAt: string;

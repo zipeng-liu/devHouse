@@ -34,19 +34,18 @@ export class AuthenticationService implements IAuthenticationService {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(user.password, saltRounds);
 
-    const newUser: User = {
+    const newUser = {
       ...user,
-      id: randomUUID(),
       password: hashedPassword,
     };
-    await this._db.prisma.user.create({
+    const createdUser =  this._db.prisma.user.create({
       data: newUser,
     });
 
-    return newUser;
+    return createdUser;
   }
 
-  async getUserById(id: string): Promise<User | null> {
+  async getUserById(id: number): Promise<User | null> {
     return await this._db.prisma.user.findUnique({
       where: {
         id: id,
