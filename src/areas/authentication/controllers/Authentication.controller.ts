@@ -67,9 +67,28 @@ class AuthenticationController implements IController {
 
 
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    
+    const { firstName, lastName, username, email, password, profilePicture } = req.body;
+    const existingUser = await this._service.findUserByEmail(email);
+    if (existingUser) {
+      req.session.messages = ["Email is already registered"];
+      return res.redirect("/auth/register");
+    }
+    const newUser = await this._service.createUser({
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+      profilePicture,
+    });
+    req.logIn(newUser, (err) => {
+      if (err) {
+        req.session.messages = ["Error logging in after registration"];
+        return res.redirect("/auth/login");
+      }
+      return res.redirect("/posts");
+    });
   };
-
 
   private logout = async (req: express.Request, res: express.Response) => {
     req.logout((err) => {

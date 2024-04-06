@@ -92,6 +92,19 @@ export default (props: { errorMessage: string }) => {
                   />
                 </div>
 
+                <div class="flex flex-col pt-4">
+                  <label for="profilePicture" class="text-lg">
+                    Profile Picture (optional)
+                  </label>
+                  <input
+                    type="url"
+                    id="profilePicture"
+                    name="profilePicture"
+                    placeholder="Link to Profile Picture"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+
                 <input
                   type="submit"
                   value="Register"

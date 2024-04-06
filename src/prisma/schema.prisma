@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id              String      @id @default(cuid())
+  id              String      @id @default(uuid())
   username        String      @unique
   email           String      @unique
   password        String
@@ -20,7 +20,7 @@ model User {
 }
 
 model Post {
-  id            String      @id @default(cuid())
+  id            String      @id @default(uuid())
   userId        String
   message       String
   createdAt     DateTime
@@ -31,7 +31,7 @@ model Post {
 }
 
 model Comment {
-  id           String      @id @default(cuid())
+  id           String      @id @default(uuid())
   createdAt    DateTime
   message      String
   user         User        @relation("UserToComment", fields: [userId], references: [id])
