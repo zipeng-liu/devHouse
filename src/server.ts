@@ -11,7 +11,8 @@ import { AuthenticationService } from "./areas/authentication/services";
 const server = new App([
   new LandingController(),
   new PostController(new MockPostService()),
-  new AuthenticationController(new MockAuthenticationService()),
+  //new AuthenticationController(new MockAuthenticationService()),
+  new AuthenticationController(new AuthenticationService()),
   // new SettingController(new SettingService()),
 ]);
 

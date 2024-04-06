@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.10.2",
+    "@prisma/client": "^5.12.1",
     "@types/bcrypt": "^5.0.2",
     "@types/connect-livereload": "^0.6.3",
     "@types/livereload": "^0.9.5",

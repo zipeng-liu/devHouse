@@ -57,7 +57,7 @@ export default class PassportConfig {
   }
   private serializeUser(passport: passport.PassportStatic) {
     passport.serializeUser((user: Express.User, done) => {
-      done(null, user.id);
+      done(null, user.id.toString());
     });
   }
 
@@ -66,6 +66,9 @@ export default class PassportConfig {
       this._authenticationService
         .getUserById(id)
         .then((user) => {
+          if (!user) {
+            return done(null, false);
+          }
           done(null, user);
         })
         .catch((error) => done(error));
