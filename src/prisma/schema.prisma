@@ -17,6 +17,8 @@ model User {
   profilePicture  String?
   posts           Post[]      @relation("UserToPost")
   comments        Comment[]   @relation("UserToComment")
+  followers       Follower[]  @relation("UserToFollowers")
+  following       Follower[]  @relation("UserToFollowing")
 }
 
 model Post {
@@ -38,4 +40,12 @@ model Comment {
   userId       String
   post         Post        @relation(fields: [postId], references: [id])
   postId       String
+}
+
+model Follower {
+  id            String    @id @default(uuid())
+  follower      User      @relation("UserToFollowing", fields: [followerId], references: [id])
+  followerId    String
+  followed      User      @relation("UserToFollowers", fields: [followedId], references: [id])
+  followedId    String
 }

@@ -13,7 +13,7 @@ export default ({ posts, user }: { posts: Post[], user: any }) => {
         <main class="flex-1 flex flex-col w-screen">
           <Header />
           <div class="w-full">
-            <PostForm />
+            <PostForm user={user}/>
             <Feed posts={posts} user={user} />
           </div>
         </main>

@@ -7,9 +7,17 @@ import DBClient from "../../../PrismaClient";
 export class PostService implements IPostService {
   readonly _db: DBClient = DBClient.getInstance();
   
-  async addPost(post: Post, username: string): Promise<void> {
+  async addPost(message: string, userId: string): Promise<void> {
     // 🚀 Implement this yourself.
-    throw new Error("Method not implemented.");
+    await this._db.prisma.post.create({
+      data: {
+        message: message,
+        userId: userId,
+        createdAt: new Date(),
+        likes: 0,
+        comments: 0
+      }
+    });
   }
 
   async getAllPosts(userId: string): Promise<Post[] | IPost[]> {
@@ -27,11 +35,37 @@ export class PostService implements IPostService {
 
   async findById(id: string): Promise<Post | IPost | undefined> {
     // 🚀 Implement this yourself.
-    throw new Error("Method not implemented.");
+    const post = await this._db.prisma.post.findUnique({
+      where: {
+        id: id
+      },
+      include: {
+        commentList: true
+      }
+    });
+    return post;
   }
+
   async addCommentToPost(message: { id: string; createdAt: string; userId: string; message: string }, postId: string): Promise<void> {
     // 🚀 Implement this yourself.
-    throw new Error("Method not implemented.");
+    await this._db.prisma.comment.create({
+      data: {
+        message: message.message,
+        createdAt: new Date(message.createdAt),
+        userId: message.userId,
+        postId: postId
+      }
+    });
+    await this._db.prisma.post.update({
+      where: {
+        id: postId
+      },
+      data: {
+        comments: {
+          increment: 1
+        }
+      }
+    });
   }
 
   async sortPosts(posts: Post[] | IPost[]): Promise<Post[] | IPost[]> {

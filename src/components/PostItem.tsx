@@ -7,6 +7,27 @@ interface Props {
   user: User | IUser;
 }
 
+const simplifyDateTime = (datetime: Date): string => {
+  const now = new Date();
+  const timeDiff = now.getTime() - datetime.getTime();
+  const seconds = Math.floor(timeDiff / 1000);
+  const secondsInMinute = 60;
+  const secondsInHour = secondsInMinute * 60;
+  const secondsInDay = secondsInHour * 24;
+  if (seconds < 60) {
+    return 'Just now';
+  } else if (seconds < secondsInHour) {
+    const minutes = Math.floor(seconds / secondsInMinute);
+    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  } else if (seconds < secondsInDay) {
+    const hours = Math.floor(seconds / secondsInHour);
+    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else {
+    return datetime.toDateString();
+  }
+}
+
+
 
 export const PostItem = ({ post, user }: Props) => {
   return (
@@ -17,7 +38,7 @@ export const PostItem = ({ post, user }: Props) => {
         <div class="w-full">
           <div class="flex flex-row items-center gap-20 justify-between">
             <p class="dark:text-white font-semibold cursor-pointer hover:underline">{user.firstName} {user.lastName}</p>
-              <span class="text-neutral-500 text-sm">Created at {post.createdAt}</span>
+              <span class="text-neutral-500 text-sm">{`Created at ${simplifyDateTime(post.createdAt)}`}</span>
           </div>
 
           <div class="dark:text-white mt-1">{post.message}</div>

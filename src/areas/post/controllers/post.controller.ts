@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, Router } from "express";
 import IController from "../../../interfaces/controller.interface";
 import IPostService from "../services/IPostService";
-import { post, posts } from "../../../model/fakeDB";
+//import { post, posts } from "../../../model/fakeDB";
 import { ensureAuthenticated } from "../../../middleware/authentication.middleware";
 
 class PostController implements IController {
@@ -40,13 +40,26 @@ class PostController implements IController {
   };
 
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object
-  private getPostById = async (request: Request, res: Response, next: NextFunction) => {
-    res.render("post/views/post", { post: posts[0] });
+  private getPostById = async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.id;
+    const post = await this._service.findById(postId);
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+    res.render("post/views/post", { post: post });
   };
 
   // 🚀 These post methods needs to be implemented by you
   private createComment = async (req: Request, res: Response, next: NextFunction) => {};
-  private createPost = async (req: Request, res: Response, next: NextFunction) => {};
+
+  private createPost = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user.id;
+    const message = req.body.data;
+    console.log(req.body)
+    await this._service.addPost(message, userId);
+    res.redirect("/posts");
+  };
+
   private deletePost = async (req: Request, res: Response, next: NextFunction) => {};
 }
 
