@@ -32,7 +32,6 @@ class AuthenticationController implements IController {
 
   private showLoginPage = (req: express.Request, res: express.Response) => {
     const errorMessage = req.session.messages || null;
-    console.log(errorMessage);
     req.session.messages = null;
     res.render("authentication/views/login", { errorMessage });
   };

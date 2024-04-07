@@ -1,10 +1,12 @@
 import IPost from "../interfaces/post.interface";
 import IUser from "../interfaces/user.interface";
+import {User, Post} from "@prisma/client";
 
 interface Props {
-  post: IPost;
-  user: IUser;
+  post: Post | IPost;
+  user: User | IUser;
 }
+
 
 export const PostItem = ({ post, user }: Props) => {
   return (
@@ -14,8 +16,8 @@ export const PostItem = ({ post, user }: Props) => {
 
         <div class="w-full">
           <div class="flex flex-row items-center gap-20 justify-between">
-            <p class="dark:text-white font-semibold cursor-pointer hover:underline">John Doe</p>
-            <span class="text-neutral-500 text-sm">5 days ago</span>
+            <p class="dark:text-white font-semibold cursor-pointer hover:underline">{user.firstName} {user.lastName}</p>
+              <span class="text-neutral-500 text-sm">Created at {post.createdAt}</span>
           </div>
 
           <div class="dark:text-white mt-1">{post.message}</div>
@@ -23,6 +25,7 @@ export const PostItem = ({ post, user }: Props) => {
           <div class="flex flex-row items-center mt-3 gap-10">
             <div class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
               Comment
+              <p>{post.comments || 0}</p>
             </div>
 
             <div

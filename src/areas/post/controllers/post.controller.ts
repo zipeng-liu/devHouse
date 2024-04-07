@@ -7,9 +7,11 @@ import { ensureAuthenticated } from "../../../middleware/authentication.middlewa
 class PostController implements IController {
   public path = "/posts";
   public router = Router();
+  private _service: IPostService;
 
   constructor(postService: IPostService) {
     this.initializeRoutes();
+    this._service = postService;
   }
 
   private initializeRoutes() {
@@ -21,8 +23,20 @@ class PostController implements IController {
   }
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
-  private getAllPosts = (_: Request, res: Response) => {
-    res.render("post/views/posts", { posts: posts });
+  private getAllPosts = async (req: Request, res: Response) => {
+    const userId = req.user.id;
+    const posts = await this._service.getAllPosts(userId);
+    const user = {
+      id: req.user.id,
+      username: req.user.username,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      profilePicture: req.user.profilePicture
+    }
+    console.log(posts)
+    console.log(user)
+    res.render("post/views/posts", { posts: posts, user: user});
   };
 
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object

@@ -4,11 +4,11 @@ import type { User, Post, Comment } from "@prisma/client";
 
 // ⭐️ Feel free to change this interface in any way you like. It is simply an example...
 export default interface IPostService {
-  addPost(post: IPost, username: string): Promise<void>;
+  addPost(post: Post, username: string): Promise<void>;
 
-  sortPosts(posts: IPost[]): Promise<Post | IPost[]>;
+  sortPosts(posts: Post[] | IPost[]): Promise<Post[] | IPost[]>;
 
-  getAllPosts(username: string): Promise<Post | IPost[]>;
+  getAllPosts(username: string): Promise<Post[] | IPost[]>;
 
   findById(id: string): Promise<Post | IPost | undefined>;
 

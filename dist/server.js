@@ -11,7 +11,8 @@ const Landing_controller_1 = __importDefault(require("./areas/landing/controller
 const services_2 = require("./areas/authentication/services");
 const server = new app_1.default([
     new Landing_controller_1.default(),
-    new post_controller_1.default(new services_1.MockPostService()),
+    // new PostController(new MockPostService()),
+    new post_controller_1.default(new services_1.PostService()),
     //new AuthenticationController(new MockAuthenticationService()),
     new Authentication_controller_1.default(new services_2.AuthenticationService()),
     // new SettingController(new SettingService()),
