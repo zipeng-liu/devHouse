@@ -42,11 +42,19 @@ class PostController implements IController {
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object
   private getPostById = async (req: Request, res: Response, next: NextFunction) => {
     const postId = req.params.id;
+    const user = {
+      id: req.user.id,
+      username: req.user.username,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      profilePicture: req.user.profilePicture
+    }
     const post = await this._service.findById(postId);
     if (!post) {
       return res.status(404).send("Post not found");
     }
-    res.render("post/views/post", { post: post });
+    res.render("post/views/post", { post: post, user: user });
   };
 
   // 🚀 These post methods needs to be implemented by you

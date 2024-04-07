@@ -3,7 +3,7 @@ import PostForm from "../../../components/PostForm";
 import Header from "../../../components/shared/Header";
 import { Html } from "../../../templates/html-tmpl";
 import Feed from "../../../components/Feed";
-import {Post} from "@prisma/client";
+import { Post } from "@prisma/client";
 
 
 export default ({ posts, user }: { posts: Post[], user: any }) => {

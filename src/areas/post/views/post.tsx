@@ -1,6 +1,8 @@
 import { Html } from "../../../templates/html-tmpl.js";
+import { Post } from "@prisma/client";
+import { simplifyDateTime } from "../../../components/PostItem";
 
-export default ({ post }: { post: any }) => {
+export default ({ post, user }: { post: any, user: any }) => {
   return (
     <Html>
       <div class="main-container">
@@ -18,26 +20,26 @@ export default ({ post }: { post: any }) => {
                     <div class="font-sans rounded border px-6 py-4 max-w-md">
                       <div class="flex items-center">
                         <img
-                          src="https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X.jpg"
+                          src={user.profilePicture}
                           class="h-12 w-12 rounded-full"
                         />
                         <div class="flex flex-col ml-4">
-                          <a class="font-bold text-black" href="#">
-                            {post.userId}
+                          <a href="/posts" class="font-bold text-black">
+                            {user.firstName} {user.lastName}
                           </a>
-                          <span class="text-grey">{post.userId}</span>
+                          <span class="text-grey">{user.username}</span>
                         </div>
                       </div>
                       <div class="mt-3 mb-1 leading-normal text-lg">{post.message}</div>
-                      <div class="text-grey mb-3 text-sm">{post.createdAt}</div>
+                      <div class="text-grey mb-3 text-sm">{`Created at ${simplifyDateTime(post.createdAt)}`}</div>
                       <div class="flex text-grey">
                         <div class="flex items-center mr-4">
-                          svg was here
+                          Comment
                           <span>{post.comments} </span>
                         </div>
                         <div class="flex items-center mr-4">svg was here</div>
                         <div class="flex items-center">
-                          svg was here
+                          Like
                           <span>{post.likes}</span>
                         </div>
                       </div>
@@ -79,7 +81,7 @@ export default ({ post }: { post: any }) => {
 
               <div class="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0">
                 <div class="bg-gray-100 w-full h-full min-h-0 min-w-0 overflow-auto rounded-lg">
-                  {post.commentList.map((comment) => (
+                  {post.commentList.map((comment: any) => (
                     <div class="w-full h-34 mt-3">
                       <div class="flex items-center dark:bg-gray-800">
                         <div class="text-black dark:text-gray-200 p-4 antialiased flex max-w-lg">

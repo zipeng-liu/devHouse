@@ -1,13 +1,13 @@
-import IPost from "../interfaces/post.interface";
-import IUser from "../interfaces/user.interface";
-import {User, Post} from "@prisma/client";
+// import IPost from "../interfaces/post.interface";
+// import IUser from "../interfaces/user.interface";
+import { User, Post } from "@prisma/client";
 
 interface Props {
-  post: Post | IPost;
-  user: User | IUser;
+  post: any;
+  user: any;
 }
 
-const simplifyDateTime = (datetime: Date): string => {
+export const simplifyDateTime = (datetime: Date): string => {
   const now = new Date();
   const timeDiff = now.getTime() - datetime.getTime();
   const seconds = Math.floor(timeDiff / 1000);
@@ -44,23 +44,23 @@ export const PostItem = ({ post, user }: Props) => {
           <div class="dark:text-white mt-1">{post.message}</div>
 
           <div class="flex flex-row items-center mt-3 gap-10">
-            <div class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
+            <a href={`/posts/${post.id}`} class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
               Comment
               <p>{post.comments || 0}</p>
-            </div>
+            </a>
 
-            <div
+            <a href={`/posts/${post.id}`} 
               class={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
             >
               Like
               <p>{post.likes || 0}</p>
-            </div>
+            </a>
 
-            <div
+            <a href={`/posts/${post.id}`} 
               class={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
             >
               Delete
-            </div>
+            </a>
           </div>
         </div>
       </div>
