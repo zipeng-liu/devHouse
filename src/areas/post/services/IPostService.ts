@@ -16,4 +16,6 @@ export default interface IPostService {
     message: { id: string; createdAt: string; userId: string; message: string },
     postId: string
   ): Promise<void>;
+
+  deletePost(postId: string): Promise<void>;
 }

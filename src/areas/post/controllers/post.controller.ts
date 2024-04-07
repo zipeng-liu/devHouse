@@ -68,7 +68,11 @@ class PostController implements IController {
     res.redirect("/posts");
   };
 
-  private deletePost = async (req: Request, res: Response, next: NextFunction) => {};
+  private deletePost = async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.id;
+    await this._service.deletePost(postId);
+    res.redirect("/posts");
+  };
 }
 
 export default PostController;

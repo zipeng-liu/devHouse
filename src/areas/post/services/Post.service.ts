@@ -72,4 +72,12 @@ export class PostService implements IPostService {
     // 🚀 Implement this yourself.
     throw new Error("Method not implemented.");
   }
+
+  async deletePost(postId: string): Promise<void> {
+    await this._db.prisma.post.delete({
+      where: {
+        id: postId
+      }
+    });
+  }
 }
