@@ -55,6 +55,7 @@ export default class PassportConfig {
     this.serializeUser(passport);
     this.deserializeUser(passport);
   }
+  
   private serializeUser(passport: passport.PassportStatic) {
     passport.serializeUser((user: Express.User, done) => {
       done(null, user.id.toString());

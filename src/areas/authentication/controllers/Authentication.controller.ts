@@ -65,7 +65,6 @@ class AuthenticationController implements IController {
     })(req, res, next);
   };
 
-
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const { firstName, lastName, username, email, password, profilePicture } = req.body;
     const existingUser = await this._service.findUserByEmail(email);
