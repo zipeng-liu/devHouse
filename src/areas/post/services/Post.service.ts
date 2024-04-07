@@ -2,6 +2,7 @@ import IPost from "../../../interfaces/post.interface";
 import IPostService from "./IPostService";
 import type { User, Post, Comment } from "@prisma/client";
 import DBClient from "../../../PrismaClient";
+import IComment from "../../../interfaces/comment.interface";
 
 // ❗️ Implement this class much later, once everything works fine with your mock db
 export class PostService implements IPostService {
@@ -46,13 +47,13 @@ export class PostService implements IPostService {
     return post;
   }
 
-  async addCommentToPost(message: { id: string; createdAt: string; userId: string; message: string }, postId: string): Promise<void> {
+  async addCommentToPost(message: string, postId: string, userId: string): Promise<void> {
     // 🚀 Implement this yourself.
     await this._db.prisma.comment.create({
       data: {
-        message: message.message,
-        createdAt: new Date(message.createdAt),
-        userId: message.userId,
+        message: message,
+        createdAt: new Date(),
+        userId: userId,
         postId: postId
       }
     });
@@ -77,6 +78,17 @@ export class PostService implements IPostService {
     await this._db.prisma.post.delete({
       where: {
         id: postId
+      }
+    });
+  }
+
+  async getCommentsByPostId(postId: string): Promise<Comment[] | IComment[] | undefined> {
+    return await this._db.prisma.comment.findMany({
+      where: {
+        postId: postId
+      },
+      include: {
+        user: true
       }
     });
   }

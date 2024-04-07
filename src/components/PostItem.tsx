@@ -46,14 +46,14 @@ export const PostItem = ({ post, user }: Props) => {
           <div class="flex flex-row items-center mt-3 gap-10">
             <a href={`/posts/${post.id}`} class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
               Comment
-              <p>{post.comments || 0}</p>
+              <p>{post.comments}</p>
             </a>
 
             <a href={`/posts/${post.id}/like`} 
               class={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
             >
               Like
-              <p>{post.likes || 0}</p>
+              <p>{post.likes}</p>
             </a>
 
             <a href={`/posts/${post.id}/delete`} 

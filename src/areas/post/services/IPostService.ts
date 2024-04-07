@@ -12,10 +12,9 @@ export default interface IPostService {
 
   findById(id: string): Promise<Post | IPost | undefined>;
 
-  addCommentToPost(
-    message: { id: string; createdAt: string; userId: string; message: string },
-    postId: string
-  ): Promise<void>;
+  addCommentToPost(message: string, postId: string, userId: string): Promise<void>;
 
   deletePost(postId: string): Promise<void>;
+
+  getCommentsByPostId(postId: string): Promise<Comment[] | IComment[] | undefined> 
 }

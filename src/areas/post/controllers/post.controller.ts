@@ -42,6 +42,7 @@ class PostController implements IController {
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object
   private getPostById = async (req: Request, res: Response, next: NextFunction) => {
     const postId = req.params.id;
+    const post = await this._service.findById(postId);
     const user = {
       id: req.user.id,
       username: req.user.username,
@@ -50,20 +51,24 @@ class PostController implements IController {
       lastName: req.user.lastName,
       profilePicture: req.user.profilePicture
     }
-    const post = await this._service.findById(postId);
-    if (!post) {
-      return res.status(404).send("Post not found");
-    }
-    res.render("post/views/post", { post: post, user: user });
+    const comments = await this._service.getCommentsByPostId(postId);
+    console.log(comments)
+    res.render("post/views/post", { post: post, user: user, comments: comments});
   };
 
   // 🚀 These post methods needs to be implemented by you
-  private createComment = async (req: Request, res: Response, next: NextFunction) => {};
+  private createComment = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user.id;
+    const { commentText } = req.body;
+    const postId = req.params.id;
+    console.log(`${userId} ${commentText} ${postId}`)
+    await this._service.addCommentToPost(commentText, postId, userId);;
+    res.redirect("/posts");
+  };
 
   private createPost = async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user.id;
     const message = req.body.data;
-    console.log(req.body)
     await this._service.addPost(message, userId);
     res.redirect("/posts");
   };

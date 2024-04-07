@@ -2,7 +2,7 @@ import { Html } from "../../../templates/html-tmpl.js";
 import { Post } from "@prisma/client";
 import { simplifyDateTime } from "../../../components/PostItem";
 
-export default ({ post, user }: { post: any, user: any }) => {
+export default ({ post, user, comments }: { post: any, user: any, comments: any }) => {
   return (
     <Html>
       <div class="main-container">
@@ -34,13 +34,10 @@ export default ({ post, user }: { post: any, user: any }) => {
                       <div class="text-grey mb-3 text-sm">{`Created at ${simplifyDateTime(post.createdAt)}`}</div>
                       <div class="flex text-grey">
                         <div class="flex items-center mr-4">
-                          Comment
-                          <span>{post.comments} </span>
+                          <span>{`Comment ${post.comments}`}</span>
                         </div>
-                        <div class="flex items-center mr-4">svg was here</div>
                         <div class="flex items-center">
-                          Like
-                          <span>{post.likes}</span>
+                          <span>{`Like ${post.likes}`}</span>
                         </div>
                       </div>
                     </div>
@@ -48,7 +45,7 @@ export default ({ post, user }: { post: any, user: any }) => {
                   <div class=" w-full min-h-0 min-w-0 mb-4">
                     <div class="flex mx-auto items-center justify-center shadow-lg mt-25 mx-8 mb-4 max-w-lg">
                       <form
-                        action="/posts/<%= post.postId %>/comment"
+                        action={`/posts/${post.id}/comment`}
                         method="post"
                         class="w-full max-w-xl bg-white rounded-lg px-4 pt-2"
                       >
@@ -63,7 +60,6 @@ export default ({ post, user }: { post: any, user: any }) => {
                             ></textarea>
                           </div>
                           <div class="w-full md:w-full flex items-start md:w-full px-3">
-                            <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">SVG was here</div>
                             <div class="-mr-1">
                               <input
                                 type="submit"
@@ -81,17 +77,17 @@ export default ({ post, user }: { post: any, user: any }) => {
 
               <div class="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0">
                 <div class="bg-gray-100 w-full h-full min-h-0 min-w-0 overflow-auto rounded-lg">
-                  {post.commentList.map((comment: any) => (
+                  {comments.map((comment: any) => (
                     <div class="w-full h-34 mt-3">
                       <div class="flex items-center dark:bg-gray-800">
                         <div class="text-black dark:text-gray-200 p-4 antialiased flex max-w-lg">
                           <img
                             class="rounded-full h-8 w-8 mr-2 mt-1 "
-                            src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80"
+                            src={comment.user.profilePicture}
                           />
                           <div>
                             <div class="rounded-3xl bg-white px-4 pt-2 pb-2.5">
-                              <div class="font-semibold text-sm leading-relaxed">{comment.userId} </div>
+                              <div class="font-semibold text-sm leading-relaxed">{comment.user.firstName} {comment.user.lastName}</div>
                               <div class="text-normal leading-snug md:leading-normal"> {comment.message}</div>
                               <div class="text-normal leading-snug md:leading-normal"> Reply</div>
                             </div>
