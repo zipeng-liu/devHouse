@@ -8,18 +8,25 @@ const PostForm = () => {
           alt="Rounded avatar"
         />
 
+        <form class="flex flex-col" method="post" action="/posts">
         <div class="w-full h-full">
           <textarea
             class="h-full rounded p-5 disabled:opacity-80 peer resize-none mt-3 w-full dark:bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 dark:text-white h-[50px]"
             placeholder="Share your thoughts..."
+            id="data"
+            name="data"
           ></textarea>
 
           <div class="mt-4 flex flex-row justify-end">
-            <button class="bg-sky-500 text-white rounded-full font-semibold border transition hover:opacity-80 disabled:opacity-70 disabled:cursor-not-allowed px-8 py-2">
+            <button class="bg-sky-500 text-white rounded-full font-semibold border transition hover:opacity-80 disabled:opacity-70 disabled:cursor-not-allowed px-8 py-2"
+            type="submit"
+            value="CreatePost"
+            >
               Post
             </button>
           </div>
         </div>
+        </form>
       </div>
     </div>
   );

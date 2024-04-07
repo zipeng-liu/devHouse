@@ -1,18 +1,17 @@
 Breakdown of Work:
 
 Example below:
-March 
+March 16th onwards 
 Armaan Brar:
 I worked on the following tasks:
 
-1. <Implemented post routes> - 
-2. <serializeUser and deserializeUser> - to store user data needed in the session
-3. <deserializeUser> - This task is responsible for xyz functionality.
+1. <Implemented post routes - 3hours> - In class I worked on confiuration of post routes 
+2. <Messed around in post routes - 2hours> - Workedon post.services and almost finished. 
+3. <Worked on creating methods for posts> - While creating the methods in my controller I broke authentication for user
 
 I also needed to research on Youtube and Google the following things:
 
-1. https://forums.developer.apple.com/forums/thread/682332 - For some reasons the port 5000 was occupied by AirPlay by default for Mac, so I had to remove it
-2. <https://stackoverflow.com/questions/38713052/understanding-public-private-in-typescript-class> - I used this site to learn what should be private or public
+1. https://forums.developer.apple.com/forums/thread/682332 - 
 
 John Chen:
 I worked on the following tasks:

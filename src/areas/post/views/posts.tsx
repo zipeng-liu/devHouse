@@ -1,4 +1,4 @@
-import { posts, userDatabase } from "../../../model/fakeDB";
+//import { posts, userDatabase } from "../../../model/fakeDB";
 import PostForm from "../../../components/PostForm";
 import Header from "../../../components/shared/Header";
 import { Html } from "../../../templates/html-tmpl";
@@ -12,7 +12,7 @@ export default ({ post }: { post: any }) => {
           <Header />
           <div class="w-full">
             <PostForm />
-            <Feed posts={posts} user={userDatabase[0]} />
+          <Feed posts={post} user={post.user} />
           </div>
         </main>
       </div>

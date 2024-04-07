@@ -5,7 +5,7 @@ export type PostDTO = Omit<Post, "id">;
 
 // ⭐️ Feel free to change this interface in any way you like. It is simply an example...
 export default interface IPostService {
-  addPost(post: PostDTO, username: string): Promise<void>;
+  addPost(post: PostDTO, username: number): Promise<void>;
 
   sortPosts(posts: Post): Promise<Post[]>;
 

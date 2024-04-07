@@ -11,18 +11,16 @@ import type { Post } from "@prisma/client";
 export class PostService implements IPostService {
   readonly _db: DBClient = DBClient.getInstance();
   
-  async addPost(post: PostDTO, username: string): Promise<void> {
+  async addPost(post: PostDTO, username: number): Promise<void> {
     // 🚀 Implement this yourself.
     try {
       await this._db.prisma.post.create({
         data: { //just a data object 
-          content: post.message,
-          userId: post.userId,
+          content: post.content,
+          userId: username,
           message: post.message,
           createdAt: new Date(),
           likes: 0,
-          // @ts-ignore           
-         // comments: 0, // I got no idea what this error is
         }
       });
     } catch (error) {
@@ -38,19 +36,21 @@ export class PostService implements IPostService {
           user: { username: username }
         },
         include: {
-          comments:true // saw the ? meaning optional, 
+          comments:true, // saw the ? meaning optional, 
+          user:true
         }
       });
-      const formattedPosts: Post[] = posts.map(post => ({
-        postId: post.id.toString(),
-        message: post.message,
-        userId: post.userId,
-        createdAt: post.createdAt,
-        commentList: post.comments, 
-        likes: post.likes,
-        comments: post.comments.length 
-      }));
-      return formattedPosts;
+      // const formattedPosts: Post[] = posts.map(post => ({
+      //   id: post.id,
+      //   content: post.content,
+      //   userId: post.userId,
+      //   message: post.message,
+      //   createdAt: post.createdAt,
+      //   likes: post.likes,
+      //   comments: post.comments, // I got no idea what this error is
+      // }));
+     // console.log(posts);
+      return posts;
     } catch (error) {
       throw new Error(`Error getting posts: ${error.message}`);
     }
@@ -59,7 +59,7 @@ export class PostService implements IPostService {
     // 🚀 Implement this yourself.
     return await this._db.prisma.post.findUnique({
       where: {
-        postId: id,
+        id: id,
       }
     });
     // const formattedPost: IPost = {
@@ -73,15 +73,18 @@ export class PostService implements IPostService {
     // };
 
   }
-  addCommentToPost(message: { id: string; createdAt: string; userId: string; message: string }, postId: string): IPost | void {
-    // 🚀 Implement this yourself.
-    return this._db.prisma.post.create({
-      where: { 
-        id: postId,
-        message: message
-      }
-    })
-  }
+  async addCommentToPost(message: string, postId: number): Promise<void> {
+    try {
+        await this._db.prisma.comment.create({
+            data: {
+                message: message,
+                postId: postId, 
+            }
+        });
+    } catch (error) {
+        throw new Error(`Error adding comment to post: ${error.message}`);
+    }
+}
 
   sortPosts(posts: IPost[]): IPost[] {
     // 🚀 Implement this yourself.

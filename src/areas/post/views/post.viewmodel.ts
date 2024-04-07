@@ -14,8 +14,8 @@ import IPost from "../../../interfaces/post.interface";
 // date that you store in createdAt.
 
 export class PostViewModel {
-  public postId: string;
-  public userId: string;
+  public postId: number;
+  public userId: number;
   public createdAt: Date;
   public message: string;
   public comments: string;

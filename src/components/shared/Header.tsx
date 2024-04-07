@@ -6,7 +6,7 @@ export const Header = () => {
           <a href="#">👩‍💻 DevHouse</a>
         </h1>
         <h1 class="dark:text-white text-xl font-semibold">
-          <a href="/auth/login">Sign Up / Login 🔑</a>
+         <a href="/auth/logout">Logout 🔒</a>
         </h1>
       </div>
     </header>

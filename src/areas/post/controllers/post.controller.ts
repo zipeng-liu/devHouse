@@ -24,26 +24,47 @@ class PostController implements IController {
 
   // 🚀 This method should use your postService and pull from your actual fakeDB, not the temporary posts object
   private getAllPosts = async (req: Request, res: Response) => {
-    const user = req.user;
-    await this._service.getAllPosts(user.username);
-    res.render("post/views/posts", { posts: posts });
+    if (req.user) {
+      const userId = req.user.id;
+      try {
+        const post = await this._service.getAllPosts(req.user.username);
+        console.log(post);
+        if (!post) {
+          res.status(404).send("Post not found");
+          return;
+        }
+        res.render("post/views/posts", { posts: post });
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(`User ID: ${userId}`);
+    }
   };
 
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object
   private getPostById = async (req: Request, res: Response, next: NextFunction) => {
-    const postId = req.params.id;
-    const post = await this._service.findById(postId);
-
-    res.render("post/views/post", { post: post });
+    const postId = req.params.id
+    console.log(postId);
+    try {
+      const post = await this._service.findById(postId);
+      if (!post) {
+        res.status(404).send("Post not found");
+        return;
+      }
+      res.render("post/views/post", { post: post });
+    } catch (error) {
+      next(error);
+    }
   };
 
   // 🚀 These post methods needs to be implemented by you
   private createComment = async (req: Request, res: Response, next: NextFunction) => {
     const postId = req.params.id;
-    const { id, createdAt, userId, message } = req.body;
+    const {createdAt, userId, message } = req.body;
+    const id = req.user.id;
     const comment = { id, createdAt, userId, message }
     try {
-      await this._service.addCommentToPost(comment, postId,);
+      await this._service.addCommentToPost(comment.message, postId,);
       res.redirect(`/posts/${postId}`);
     } catch {
       res.status(404).send("Error")
@@ -52,9 +73,17 @@ class PostController implements IController {
   };
   private createPost = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = req.body;
-      const user = req.user;
-      await this._service.addPost(data, user.username); 
+      const userId = req.user.id
+      const message  = req.body.data;
+      const data = {
+        content: message,
+        userId: userId,
+        message: `A new post has been created by ${req.user.username}`,
+        createdAt: new Date(),
+        likes: 0,
+      } 
+      console.log(data);
+      await this._service.addPost(data, userId); 
       res.redirect("/posts");
     } catch (error) {
       next(error);

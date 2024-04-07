@@ -7,7 +7,7 @@ interface IPost {
   createdAt: Date;
   commentList?: Array<IComment>;
   likes: number;
-  comments: number;
+  comments: IComment[];
 }
 
 export default IPost;
