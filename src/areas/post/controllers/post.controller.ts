@@ -17,7 +17,7 @@ class PostController implements IController {
   private initializeRoutes() {
     this.router.get(this.path, ensureAuthenticated, this.getAllPosts);
     this.router.get(`${this.path}/:id`, this.getPostById);
-    this.router.get(`${this.path}/:id/delete`, this.deletePost);
+    this.router.get(`${this.path}/:id/delete`, this.authorizeDelete, this.deletePost);
     this.router.post(`${this.path}/:id/comment`, this.createComment);
     this.router.post(`${this.path}`, this.createPost);
   }
@@ -71,6 +71,16 @@ class PostController implements IController {
     const message = req.body.data;
     await this._service.addPost(message, userId);
     res.redirect("/posts");
+  };
+
+  private authorizeDelete = async (req: Request, res: Response, next: NextFunction) => {
+    const postId = req.params.id;
+    const userId = req.user.id;
+    const post = await this._service.findById(postId);
+    if (post.userId !== userId) {
+      res.status(403).send("Unauthorized: You are not the owner of this post");
+    }
+    next();
   };
 
   private deletePost = async (req: Request, res: Response, next: NextFunction) => {

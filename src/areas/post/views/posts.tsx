@@ -9,7 +9,7 @@ import { Post } from "@prisma/client";
 export default ({ posts, user }: { posts: Post[], user: any }) => {
   return (
     <Html>
-      <div class="h-screen bg-gray-200 w-screen">
+      <div class="min-h-screen bg-gray-200 flex flex-col">
         <main class="flex-1 flex flex-col w-screen">
           <Header />
           <div class="w-full">

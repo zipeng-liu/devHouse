@@ -20,3 +20,4 @@ export const setCurrentUser = (req: express.Request, res: express.Response, next
   }
   next();
 };
+
