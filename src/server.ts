@@ -8,6 +8,8 @@ import LandingController from "./areas/landing/controllers/Landing.controller";
 import SettingController from "./areas/settings/controllers/setting.controller";
 import { SettingService } from "./areas/settings/services";
 import { AuthenticationService } from "./areas/authentication/services";
+import FollowController  from "./areas/follow/controllers/follow.controller"
+import { FollowService } from "./areas/follow/services";
 
 const server = new App([
   new LandingController(),
@@ -15,7 +17,8 @@ const server = new App([
   new PostController(new PostService()),
   //new AuthenticationController(new MockAuthenticationService()),
   new AuthenticationController(new AuthenticationService()),
-  // new SettingController(new SettingService()),
+  new SettingController(new SettingService()),
+  new FollowController(new FollowService())
 ]);
 
 server.start();

@@ -14,7 +14,7 @@ class SettingController implements IController {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/`, this.getSettingsPage);
+    this.router.get(`${this.path}/`, ensureAuthenticated, this.getSettingsPage);
     this.router.post(`${this.path}/change-username`, this.changeUsername);
     this.router.post(`${this.path}/change-email`, this.changeEmail);
     this.router.post(`${this.path}/change-password`, this.changePassword);
