@@ -96,6 +96,12 @@ export class PostService implements IPostService {
   }
 
   async deletePost(postId: string): Promise<void> {
+    await this._db.prisma.comment.deleteMany({
+      where: {
+        postId: postId
+      }
+    });
+  
     await this._db.prisma.post.delete({
       where: {
         id: postId
