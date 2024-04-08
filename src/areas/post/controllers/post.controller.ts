@@ -34,9 +34,8 @@ class PostController implements IController {
       lastName: req.user.lastName,
       profilePicture: req.user.profilePicture
     }
-    console.log(posts)
-    console.log(user)
-    res.render("post/views/posts", { posts: posts, user: user});
+    const sortedPosts = await this._service.sortPosts(posts);
+    res.render("post/views/posts", { posts: sortedPosts, user: user});
   };
 
   // 🚀 This methods should use your postService and pull from your actual fakeDB, not the temporary post object
