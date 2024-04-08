@@ -52,8 +52,17 @@ export class FollowService implements ISettingService {
   async followUser(userId: string, followedUserId: string): Promise<void> {
     await this._db.prisma.follows.create({
       data: {
-        followedById: userId,
-        followingId: followedUserId,
+        followedById: followedUserId,
+        followingId: userId
+      },
+    });
+  }
+
+  async unfollowUser(userId: string, followedUserId: string): Promise<void> {
+    await this._db.prisma.follows.deleteMany({
+      where: {
+        followedById: followedUserId,
+        followingId: userId
       },
     });
   }

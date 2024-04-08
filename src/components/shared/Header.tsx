@@ -6,7 +6,7 @@ export const Header = () => {
           <a href="/posts">👩‍💻 DevHouse</a>
         </h1>
         <h1 class="dark:text-white text-xl font-semibold">
-          <a href="/follow">Follow 🌐</a>
+          <a href="/follow">🌐 Follow</a>
         </h1>
         <h1 class="dark:text-white text-xl font-semibold">
           <a href="/settings">Settings ⚙️</a>

@@ -52,7 +52,6 @@ class PostController implements IController {
       profilePicture: req.user.profilePicture
     }
     const comments = await this._service.getCommentsByPostId(postId);
-    console.log(comments)
     res.render("post/views/post", { post: post, user: user, comments: comments});
   };
 
@@ -61,7 +60,6 @@ class PostController implements IController {
     const userId = req.user.id;
     const { commentText } = req.body;
     const postId = req.params.id;
-    console.log(`${userId} ${commentText} ${postId}`)
     await this._service.addCommentToPost(commentText, postId, userId);;
     res.redirect("/posts");
   };

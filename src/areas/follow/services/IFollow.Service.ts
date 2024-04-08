@@ -6,4 +6,5 @@ export default interface IFollowService {
   getFollowedUsers(userId: string): Promise<User[]>;
   getUnfollowedUsers(userId: string): Promise<User[]>;
   followUser(userId: string, followedUserId: string): Promise<void>;
+  unfollowUser(userId: string, unfollowedUserId: string): Promise<void>;
 }
