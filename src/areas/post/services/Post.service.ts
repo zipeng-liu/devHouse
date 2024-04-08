@@ -23,14 +23,28 @@ export class PostService implements IPostService {
 
   async getAllPosts(userId: string): Promise<Post[] | IPost[]> {
     // 🚀 Implement this yourself.
-    const posts = await this._db.prisma.post.findMany({
+    const followingIds = (await this._db.prisma.follows.findMany({
       where: {
-        userId: userId
+          followingId: userId
       },
-      include: {
-        commentList: true
+      select: {
+          followedById: true
       }
+    })).map(user => user.followedById);
+
+    followingIds.push(userId);
+
+    const posts = await this._db.prisma.post.findMany({
+        where: {
+            userId: {
+                in: followingIds
+            }
+        },
+        include: {
+            user: true
+        }
     });
+
     return posts;
   }
 
@@ -41,9 +55,11 @@ export class PostService implements IPostService {
         id: id
       },
       include: {
-        commentList: true
+        commentList: true,
+        user: true
       }
     });
+
     return post;
   }
 
@@ -57,6 +73,7 @@ export class PostService implements IPostService {
         postId: postId
       }
     });
+
     await this._db.prisma.post.update({
       where: {
         id: postId
@@ -71,7 +88,11 @@ export class PostService implements IPostService {
 
   async sortPosts(posts: Post[] | IPost[]): Promise<Post[] | IPost[]> {
     // 🚀 Implement this yourself.
-    throw new Error("Method not implemented.");
+    const sortedPosts = posts.sort((a: any, b: any) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
+    return sortedPosts;
   }
 
   async deletePost(postId: string): Promise<void> {

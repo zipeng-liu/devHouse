@@ -8,17 +8,17 @@ datasource db {
 }
 
 model User {
-  id              String      @id @default(uuid())
-  username        String      @unique
-  email           String      @unique
-  password        String
-  firstName       String
-  lastName        String
-  profilePicture  String?
-  posts           Post[]      @relation("UserToPost")
-  comments        Comment[]   @relation("UserToComment")
-  followers       Follower[]  @relation("UserToFollowers")
-  following       Follower[]  @relation("UserToFollowing")
+  id                String       @id @default(uuid())
+  username          String       @unique
+  email             String       @unique
+  password          String
+  firstName         String
+  lastName          String
+  profilePicture    String?
+  posts             Post[]       @relation("UserToPost")
+  comments          Comment[]    @relation("UserToComment")
+  followedBy        Follows[]    @relation("followedBy")
+  following         Follows[]    @relation("following")
 }
 
 model Post {
@@ -42,10 +42,11 @@ model Comment {
   postId       String
 }
 
-model Follower {
-  id            String    @id @default(uuid())
-  follower      User      @relation("UserToFollowing", fields: [followerId], references: [id])
-  followerId    String
-  followed      User      @relation("UserToFollowers", fields: [followedId], references: [id])
-  followedId    String
+model Follows {
+  followedBy       User      @relation("followedBy", fields: [followedById], references: [id])
+  followedById     String
+  following        User      @relation("following", fields: [followingId], references: [id])
+  followingId      String
+
+  @@id([followingId, followedById])
 }

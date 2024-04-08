@@ -2,7 +2,7 @@ import { Html } from "../../../templates/html-tmpl.js";
 import { Post } from "@prisma/client";
 import { simplifyDateTime } from "../../../components/PostItem";
 
-export default ({ post, user, comments }: { post: any, user: any, comments: any }) => {
+export default ({ post, comments }: { post: any, comments: any }) => {
   return (
     <Html>
       <div class="main-container">
@@ -20,14 +20,14 @@ export default ({ post, user, comments }: { post: any, user: any, comments: any 
                     <div class="font-sans rounded border px-6 py-4 max-w-md">
                       <div class="flex items-center">
                         <img
-                          src={user.profilePicture}
+                          src={post.user.profilePicture}
                           class="h-12 w-12 rounded-full"
                         />
                         <div class="flex flex-col ml-4">
-                          <a href="/posts" class="font-bold text-black">
-                            {user.firstName} {user.lastName}
-                          </a>
-                          <span class="text-grey">{user.username}</span>
+                          <div class="font-bold text-black">
+                            {post.user.firstName} {post.user.lastName}
+                          </div>
+                          <span class="text-grey">{post.user.username}</span>
                         </div>
                       </div>
                       <div class="mt-3 mb-1 leading-normal text-lg">{post.message}</div>
@@ -60,6 +60,9 @@ export default ({ post, user, comments }: { post: any, user: any, comments: any 
                             ></textarea>
                           </div>
                           <div class="w-full md:w-full flex items-start md:w-full px-3">
+                            <a href="/posts" class="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
+                              Back
+                            </a>
                             <div class="-mr-1">
                               <input
                                 type="submit"
