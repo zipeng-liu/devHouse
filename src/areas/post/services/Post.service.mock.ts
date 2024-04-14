@@ -1,3 +1,4 @@
+// @ts-nocheck
 import IPost from "../../../interfaces/post.interface";
 import IPostService from "./IPostService";
 
@@ -13,6 +14,13 @@ export class MockPostService implements IPostService {
 
     throw new Error("Method not implemented.");
   }
+
+  getAllTest(): IPost[] {
+    // 🚀 Implement this yourself.
+
+    return postsDB;
+  }
+
   findById(id: string): IPost {
     // 🚀 Implement this yourself.
     return postsDB.find((post) => post.postId === id);

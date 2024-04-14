@@ -10,10 +10,12 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { IAuthenticationService } from "../services/IAuthentication.service";
 import FormValidater from "../../../helper/FormValidator";
+import { User as TUser } from "@prisma/client";
 
+// Ask gpt later how to merge type User with interface User
 declare global {
   namespace Express {
-    interface User extends IUser {}
+    interface User extends TUser {}
   }
 }
 

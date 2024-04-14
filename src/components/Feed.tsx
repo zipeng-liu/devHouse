@@ -1,11 +1,13 @@
-import IUser from "../interfaces/user.interface";
+import User from "../interfaces/user.interface";
 import IPost from "../interfaces/post.interface";
 import PostItem from "./PostItem";
+import { Post } from "@prisma/client";
 
-export const Feed = ({ posts, user }: { posts: IPost[]; user: IUser }) => {
+// TODO: change any to be the prisma Post type
+export const Feed = ({ posts, user }: { posts: Post[]; user: User }) => {
   return (
     <>
-      {posts.map((post: IPost) => (
+      {posts.map((post) => (
         <PostItem post={post} user={user} />
       ))}
     </>

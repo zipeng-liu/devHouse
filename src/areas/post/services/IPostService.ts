@@ -1,17 +1,19 @@
 import IPost from "../../../interfaces/post.interface";
 
+import type { Post } from "@prisma/client";
+export type PostDTO = Omit<Post, "id">;
+
 // ⭐️ Feel free to change this interface in any way you like. It is simply an example...
 export default interface IPostService {
-  addPost(post: IPost, username: string): void;
+  addPost(post: PostDTO, userId: number): Promise<Post>;
 
-  sortPosts(posts: IPost[]): IPost[];
+  // sortPosts(posts: Post): Promise<Post[]>;
 
-  getAllPosts(username: string): IPost[];
+  getAllPosts(username: string): Promise<Post[]>;
 
-  findById(id: string): IPost | undefined;
+  getAllTest(): Promise<Post[]>;
 
-  addCommentToPost(
-    message: { id: string; createdAt: string; userId: string; message: string },
-    postId: string
-  ): IPost | void;
+  findById(id: number): Promise<Post | undefined>;
+
+  // addCommentToPost(id: number, createdAt: string, userId: number, message: string, postId: number): Promise<Post>;
 }

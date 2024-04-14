@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { database } from "../../../model/fakeDB";
 import { IAuthenticationService, UserDTO } from "./IAuthentication.service";
 import { randomUUID } from "node:crypto";

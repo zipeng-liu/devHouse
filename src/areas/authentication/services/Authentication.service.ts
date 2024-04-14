@@ -17,7 +17,7 @@ export class AuthenticationService implements IAuthenticationService {
     });
   }
   async getUserByEmailAndPassword(email: string, password: string): Promise<User | null> {
-    const user = this.findUserByEmail(email);
+    const user = await this.findUserByEmail(email);
     if (!user) {
       return null;
     }
@@ -34,22 +34,22 @@ export class AuthenticationService implements IAuthenticationService {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(user.password, saltRounds);
 
-    const newUser: User = {
+    const newUser = {
       ...user,
-      id: randomUUID(),
       password: hashedPassword,
     };
-    await this._db.prisma.user.create({
+
+    const createdUser = await this._db.prisma.user.create({
       data: newUser,
     });
 
-    return newUser;
+    return createdUser;
   }
 
   async getUserById(id: string): Promise<User | null> {
     return await this._db.prisma.user.findUnique({
       where: {
-        id: id,
+        id: Number(id),
       },
     });
   }

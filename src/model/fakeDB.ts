@@ -6,7 +6,7 @@ import IDatabase from "../interfaces/database.interface.ts";
 const database: IDatabase = {
   users: [
     {
-      id: "1",
+      id: 1,
       profilePicture:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png",
       email: "gates@gmail.com",
@@ -34,7 +34,7 @@ const database: IDatabase = {
       ],
     },
     {
-      id: "2",
+      id: 2,
       profilePicture:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png",
       username: "james123",
@@ -118,7 +118,7 @@ const post = {
 
 const posts = [
   {
-    postId: "5",
+    postId: 5,
     userId: "john",
     createdAt: new Date(),
     message: "Hi there",
@@ -127,7 +127,7 @@ const posts = [
     commentList: [],
   },
   {
-    postId: "4",
+    postId: 4,
     userId: "john",
     createdAt: new Date(),
     message: `This is the first line of code I ever learned! <pre><code>console.log("hello world");</code></pre>`,

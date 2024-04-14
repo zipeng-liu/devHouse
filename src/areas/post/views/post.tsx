@@ -8,7 +8,7 @@ export default ({ post }: { post: any }) => {
           <main class="sm:h-full flex-1 flex flex-col min-h-0 min-w-0 overflow-auto">
             <header class="border-b-[1px] border-slate-200 dark:border-neutral-800 w-full p-5 bg-white">
               <div class="flex flex-row items-center gap-2">
-                <h1 class="dark:text-white text-xl font-semibold">DevHouse</h1>
+                <h1 class="dark:text-black text-xl font-semibold">DevHouse</h1>
               </div>
             </header>
             <section class="flex-1 pt-3 md:p-6 lg:mb-0 lg:min-h-0 lg:min-w-0">

@@ -19,16 +19,24 @@ export class PostViewModel {
   public createdAt: Date;
   public message: string;
   public comments: string;
-  public likes: string;
+  public likes: number;
   public commentList?: Array<IComment>;
 
   constructor(post: IPost) {
-    this.postId = post.postId;
-    this.userId = post.userId;
+    this.postId = String(post.postId);
+    this.userId = String(post.userId);
     this.createdAt = post.createdAt;
     this.message = post.message;
     this.comments = post.comments?.toString();
-    this.likes = post.likes?.toString();
+    this.likes = post.likes;
     this.commentList = post.commentList;
   }
+
+  // private formatDate(date:Date):{
+
+  //   const formatter = new Intl.DateTimeFormat('zh-TW',{
+  //     year:'',
+  //     month
+  //   })
+  // }
 }

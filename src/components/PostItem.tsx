@@ -1,12 +1,12 @@
-import IPost from "../interfaces/post.interface";
+import { Post } from "@prisma/client";
 import IUser from "../interfaces/user.interface";
 
-interface Props {
-  post: IPost;
+interface IPostAndUserType {
+  post: Post;
   user: IUser;
 }
 
-export const PostItem = ({ post, user }: Props) => {
+export const PostItem = ({ post, user }: IPostAndUserType) => {
   return (
     <div class="mx-5 rounded mt-5 bg-white border-b-[1px] p-10 cursor-pointer border-slate-200 hover:bg-gray-100 transition relative">
       <div class="flex flex-row items-center gap-3 cursor-pointer">
@@ -14,11 +14,11 @@ export const PostItem = ({ post, user }: Props) => {
 
         <div class="w-full">
           <div class="flex flex-row items-center gap-20 justify-between">
-            <p class="dark:text-white font-semibold cursor-pointer hover:underline">John Doe</p>
+            <p class="dark:text-black font-semibold cursor-pointer hover:underline">{user}</p>
             <span class="text-neutral-500 text-sm">5 days ago</span>
           </div>
 
-          <div class="dark:text-white mt-1">{post.message}</div>
+          <div class="dark:text-black mt-1">{post.content}</div>
 
           <div class="flex flex-row items-center mt-3 gap-10">
             <div class="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">

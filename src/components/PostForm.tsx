@@ -15,7 +15,7 @@ const PostForm = () => {
           ></textarea>
 
           <div class="mt-4 flex flex-row justify-end">
-            <button class="bg-sky-500 text-white rounded-full font-semibold border transition hover:opacity-80 disabled:opacity-70 disabled:cursor-not-allowed px-8 py-2">
+            <button class="bg-sky-500 text-black rounded-full font-semibold border transition hover:opacity-80 disabled:opacity-70 disabled:cursor-not-allowed px-8 py-2">
               Post
             </button>
           </div>
