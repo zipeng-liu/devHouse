@@ -9,30 +9,33 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  username  String @unique
-  email     String @unique
-  password  String
-  firstName String
-  lastName  String
-  posts     Post[]
+  id             Int     @id @default(autoincrement())
+  username       String  @unique
+  email          String  @unique
+  password       String
+  firstName      String
+  lastName       String
+  profilePicture String? @default("http://cdn.onlinewebfonts.com/svg/img_206976.png")
+  posts          Post[]
+  following      User[]  @relation("followers")
+  followers      User[]  @relation("followers")
 }
 
 model Post {
   postId      Int       @id @default(autoincrement())
   message     String
   userId      Int
-  user        User      @relation(fields: [userId], references: [id])
   createdAt   DateTime  @default(now())
   likes       Int
   comments    Int
   commentList Comment[]
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Comment {
   commentId Int      @id @default(autoincrement())
   message   String
   createdAt DateTime @default(now())
-  Post      Post     @relation(fields: [postId], references: [postId])
   postId    Int
+  Post      Post     @relation(fields: [postId], references: [postId])
 }

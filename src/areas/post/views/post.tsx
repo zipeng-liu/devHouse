@@ -1,6 +1,7 @@
+import { Post } from "@prisma/client";
 import { Html } from "../../../templates/html-tmpl.js";
 
-export default ({ post }: { post: any }) => {
+export default ({ post, postId }: { post: Post, postId: number }) => {
   return (
     <Html>
       <div class="main-container">
@@ -79,7 +80,7 @@ export default ({ post }: { post: any }) => {
 
               <div class="border h-full w-full lg:flex-1 px-3 min-h-0 min-w-0">
                 <div class="bg-gray-100 w-full h-full min-h-0 min-w-0 overflow-auto rounded-lg">
-                  {post.commentList.map((comment) => (
+                  {/* {post.commentList.map((comment) => (
                     <div class="w-full h-34 mt-3">
                       <div class="flex items-center dark:bg-gray-800">
                         <div class="text-black dark:text-gray-200 p-4 antialiased flex max-w-lg">
@@ -97,7 +98,7 @@ export default ({ post }: { post: any }) => {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
               </div>
             </section>

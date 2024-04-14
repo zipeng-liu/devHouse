@@ -46,7 +46,7 @@ class AuthenticationController implements IController {
     failureMessage: true,
   });
   private registration = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    const { email, password } = req.body;
+    const { email, password, username, firstname, lastname } = req.body;
 
     try {
       const userEmailExists = await this.service.findUserByEmail(email);
@@ -54,11 +54,11 @@ class AuthenticationController implements IController {
         throw new EmailAlreadyExistsException(email);
       }
       this.service.createUser({
-        username: "fake",
+        username,
         email,
         password,
-        firstName: "fake",
-        lastName: "fake",
+        firstName: firstname,
+        lastName: lastname,
       });
       res.redirect("/auth/login");
     } catch (error) {
@@ -68,9 +68,16 @@ class AuthenticationController implements IController {
   };
   private logout = async (req: express.Request, res: express.Response) => {
     req.logout((err) => {
-      if (err) console.log(err);
+      if (err) {
+        console.log(err);
+        res.redirect('/'); 
+      } else {
+        req.session.destroy(() => { 
+          res.clearCookie('connect.sid'); 
+          res.redirect('/auth/login'); 
+        });
+      }
     });
-    res.redirect("/");
   };
 }
 

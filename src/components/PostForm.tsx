@@ -1,4 +1,5 @@
-const PostForm = () => {
+const PostForm = ( { postId } ) => {
+    const actionUrl = postId ? `/posts/${postId}` : '/posts';
   return (
     <div class="border-b-[1px] border-slate-200 dark:border-neutral-800 px-5 py-2">
       <div class="flex flex-row gap-4">
@@ -9,9 +10,13 @@ const PostForm = () => {
         />
 
         <div class="w-full h-full">
+        <form action={actionUrl} method="post"> 
+
           <textarea
             class="h-full rounded p-5 disabled:opacity-80 peer resize-none mt-3 w-full dark:bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 dark:text-white h-[50px]"
             placeholder="Share your thoughts..."
+            name="message"
+            id="message"
           ></textarea>
 
           <div class="mt-4 flex flex-row justify-end">
@@ -19,6 +24,8 @@ const PostForm = () => {
               Post
             </button>
           </div>
+
+          </form>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import IComment from "./comment.interface";
+import IUser from "./user.interface";
 
 interface IPost {
   postId: number;
@@ -8,6 +9,7 @@ interface IPost {
   commentList?: Array<IComment>;
   likes: number;
   comments: number;
+  user: IUser;
 }
 
 export default IPost;

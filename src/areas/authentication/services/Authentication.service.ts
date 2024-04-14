@@ -1,5 +1,5 @@
 import DBClient from "../../../PrismaClient";
-import IUser from "../../../interfaces/user.interface";
+//import IUser from "../../../interfaces/user.interface";
 import { IAuthenticationService, UserDTO } from "./IAuthentication.service";
 import type { User } from "@prisma/client";
 import { randomUUID } from "node:crypto";
