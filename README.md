@@ -1,9 +1,8 @@
-Breakdown of Work:
+# Breakdown of Work:
 
-Example below:
-March 9th (First Sprint Complete)
+## March 9th (First Sprint Complete)
 
-Aless:
+### Aless:
 I worked on the following tasks:
 
 1. implement formValidater - to check if user's input for login is either empty or incorrect
@@ -17,29 +16,32 @@ I also needed to research on Youtube and Google the following things:
 2. <https://stackoverflow.com/questions/38713052/understanding-public-private-in-typescript-class> - I used this site to learn what should be private or public
 
 
-Denis:
+### Denis:
 I worked on the following tasks:
 
 1. <Insert Some Task Here> - This task is responsible for xyz functionality.
 2. <Insert Some Task Here> - This task is responsible for xyz functionality.
 3. <Insert Some Task Here> - This task is responsible for xyz functionality.
 
-Armaan:
+### Armaan:
 I worked on the following tasks:
 
 1. <Insert Some Task Here> - This task is responsible for xyz functionality.
 2. <Insert Some Task Here> - This task is responsible for xyz functionality.
 3. <Insert Some Task Here> - This task is responsible for xyz functionality.
 
-Ademi:
+### Ademi:
 I worked on the following tasks:
 
 1. Authentication Mock services - This task is responsible for authentication functionality (create session and etc) with fake database.
 2. Authentication controller - This task is responsible for login/register/logout pages functionality.
 
-March 16th (Second Sprint Complete)
 
-Aless:
+
+
+## March 16th (Second Sprint Complete)
+
+### Aless:
 I worked on the following tasks:
 
 1. Set up prisma database - this task is responsible for moving data from mock db to prisma databse 
@@ -50,14 +52,14 @@ I also needed to research on Youtube and Google the following things:
 
 1. https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries 
 
-Denis:
+### Denis:
 I worked on the following tasks:
 
 1. <Insert Some Task Here> - This task is responsible for xyz functionality.
 2. <Insert Some Task Here> - This task is responsible for xyz functionality.
 3. <Insert Some Task Here> - This task is responsible for xyz functionality.
 
-Armaan:
+### Armaan:
 I worked on the following tasks:
 
 1. <Insert Some Task Here> - This task is responsible for xyz functionality.
@@ -68,7 +70,7 @@ I also needed to research on Youtube and Google the following things:
 
 1. <Insert Video or Link to thing you needed to research>
 
-Ademi:
+### Ademi:
 I worked on the following tasks:
 
 1. Authentication services - This task is responsible for authentication functionality with prisma.
