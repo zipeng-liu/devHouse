@@ -2,6 +2,7 @@ Breakdown of Work:
 
 Example below:
 March 9th (First Sprint Complete)
+
 Aless:
 I worked on the following tasks:
 
@@ -34,6 +35,7 @@ I worked on the following tasks:
 2. Authentication controller - This task is responsible for login/register/logout pages functionality.
 
 March 16th (Second Sprint Complete)
+
 Aless:
 I worked on the following tasks:
 
