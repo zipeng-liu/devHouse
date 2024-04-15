@@ -19,9 +19,15 @@ I also needed to research on Youtube and Google the following things:
 ### Denis:
 I worked on the following tasks:
 
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
+1. Implement authentication services for Mock DB - This is for checking and grabbing the data from the fake database.
+2. Implement login, register, and logout for Mock DB in the authentication controller - This is to define each route and make the functionalities.
+3. Implement passport configuration for Mock DB - This is to make the passport handle user authentication logic.
+4. Fix the TSX files - This is to make error messages show on on login or registration page, and also added more form columns for registration page.
+
+I also needed to research on Youtube and Google the following things:
+
+1. <https://www.passportjs.org/packages/passport-local/> - For implementing passport local strategy.
+
 
 ### Armaan:
 I worked on the following tasks:
@@ -29,6 +35,7 @@ I worked on the following tasks:
 1. <Insert Some Task Here> - This task is responsible for xyz functionality.
 2. <Insert Some Task Here> - This task is responsible for xyz functionality.
 3. <Insert Some Task Here> - This task is responsible for xyz functionality.
+
 
 ### Ademi:
 I worked on the following tasks:
@@ -46,18 +53,31 @@ I worked on the following tasks:
 
 1. Set up prisma database - this task is responsible for moving data from mock db to prisma databse 
 2. Post services - getting data from prisma to show on the post feed after login
-3. Post controller - use post service to add in functionaloty
+3. Post controller - use post service to add in functionality
 
 I also needed to research on Youtube and Google the following things:
 
-1. https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries 
+1. <https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries> 
+
 
 ### Denis:
 I worked on the following tasks:
 
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
+1. Create Prisma schema - Define User, Post, Comment, Follows database schema.
+2. Implement authentication services for Prisma - This is for checking and grabbing the data using Prisma ORM.
+3. Implement Post services - Making user info and post feed show up.
+4. Fixed header - added more buttons in the headers, for following and settings.
+5. Implement the post's buttons functionalities - Include making comment, like number show up, and implement detlete post.
+6. Create post page - This is to show single post info, and making new comment, show all the comments for that post.
+7. Create following page - The page show the login user's current followers, and people not yet followed.
+8. Implement the following logic - User can follow and unfollow other users.
+9. Make the settings page show up.
+
+I also needed to research on Youtube and Google the following things:
+
+1. <https://www.prisma.io/docs/getting-started/quickstart> - For Prisma setup.
+2. <https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/self-relations> - For how to create the Follows schema.
+   
 
 ### Armaan:
 I worked on the following tasks:
@@ -69,6 +89,7 @@ I worked on the following tasks:
 I also needed to research on Youtube and Google the following things:
 
 1. <Insert Video or Link to thing you needed to research>
+
 
 ### Ademi:
 I worked on the following tasks:
@@ -83,6 +104,6 @@ I worked on the following tasks:
 
 I also needed to research on Youtube and Google the following things:
 
-1. https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/self-relations
-2. https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries
-3. https://www.prisma.io/docs/orm/prisma-client/queries/crud
+1. <https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/self-relations>
+2. <https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries>
+3. <https://www.prisma.io/docs/orm/prisma-client/queries/crud>
