@@ -48,7 +48,7 @@ I worked on the following tasks:
 
 I also needed to research on Youtube and Google the following things:
 
-1. [<Insert Video or Link to thing you needed to research>](https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries) 
+1. https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries 
 
 Denis:
 I worked on the following tasks:
