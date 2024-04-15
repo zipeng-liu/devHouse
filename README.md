@@ -6,10 +6,10 @@ March 9th (First Sprint Complete)
 Aless:
 I worked on the following tasks:
 
-1. <implement formValidater> - to check if user's input for login is either empty or incorrect
-2. <serializeUser and deserializeUser> - to store user data needed in the session
-3. <implement login> - allow user to login with the crediential in mock database
-4. <implement register> - allow user to login with mock-database
+1. implement formValidater - to check if user's input for login is either empty or incorrect
+2. serializeUser and deserializeUser - to store user data needed in the session
+3. implement login - allow user to login with the crediential in mock database
+4. implement register - allow user to login with mock-database
 
 I also needed to research on Youtube and Google the following things:
 
@@ -42,9 +42,10 @@ March 16th (Second Sprint Complete)
 Aless:
 I worked on the following tasks:
 
-1. <Set up prisma database> - this task is responsible for moving data from mock db to prisma databse 
-2. <Post services> - getting data from prisma to show on the post feed after login
-3. <Post controller> - use post service to add in functionaloty
+1. Set up prisma database - this task is responsible for moving data from mock db to prisma databse 
+2. Post services - getting data from prisma to show on the post feed after login
+3. Post controller - use post service to add in functionaloty
+
 I also needed to research on Youtube and Google the following things:
 
 1. [<Insert Video or Link to thing you needed to research>](https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries) 
