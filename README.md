@@ -32,10 +32,14 @@ I also needed to research on Youtube and Google the following things:
 ### Armaan:
 I worked on the following tasks:
 
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
+1. Worked on auth authentication  - This task is responsible for authentication and sessions. 
+2. Worked on authe controller  - This task involved me working on login and logout with sessions, also included deserialize and serialize.
+3. Implemented configuration for password - This task is responsible for establishing secure and efficient protocols for user authentication.
+4. Worked with Tailwind for errors - This task is responsible for errors, this made error messages show up in the login and registration.
 
+I also needed to research on Youtube and Google the following things:
+1.https://flowbite.com/docs/components/alerts/ -  To figureout how I can get errors to show up, I found alerts to be the simpliest
+way to get alert pop ups when an error occured.
 
 ### Ademi:
 I worked on the following tasks:
@@ -82,13 +86,20 @@ I also needed to research on Youtube and Google the following things:
 ### Armaan:
 I worked on the following tasks:
 
-1. <Insert Some Task Here> - This task is responsible for xyz functionality.
-2. <Insert Some Task Here> - This task is responsible for xyz functionality.
-3. <Insert Some Task Here> - This task is responsible for xyz functionality.
+1. Implemented post services - This task is responsible for creating the methods needed for the PostService class. 
+2. Implemented post routes - This task is responsible for the confiuration of post routes, post methods. Calls post services.
+3. Created/modified Prisma schema - This task is responsible for organization of databases. Defining users, posts
+4. Changed interface user string to number - This task is responsible for configuring or changing interfaces and types to number.
+I did this because I would be able to use auto incrementation - This ended up breaking my prisma client.
+5. Created basic operations for post - This task is reponsibible for adding and deleting posts and comments.
 
 I also needed to research on Youtube and Google the following things:
 
-1. <Insert Video or Link to thing you needed to research>
+1. https://www.prisma.io/docs/orm/prisma-client/queries/crud -  I found this very useful when creating my post routes and services.
+It gave a good understanding of how to use crud using prisma.
+2. https://www.prisma.io/docs/orm/prisma-schema/data-model/models - Helped me create my schema, the example they have was really nice.
+3. https://github.com/prisma/prisma/issues/18272 -  I was getting an error related to prisma because my schema was not migrating.
+4. https://github.com/prisma/prisma/issues/16990 -  The above error was related to this, and this helped me solve it.
 
 
 ### Ademi:
